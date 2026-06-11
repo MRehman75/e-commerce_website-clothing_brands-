@@ -1,12 +1,33 @@
 <div>
-    <div class="flex items-center justify-between mb-4">
-        <input wire:model.live.debounce.300ms="search" type="text"
-               placeholder="Search zones..."
-               class="form-control w-64" />
-        <button wire:click="openCreate" class="btn btn-primary">
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-globe fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Shipping Zones</h4>
+            <small class="text-white-50">Manage your shipping zones</small>
+        </div>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text bg-white border-0">
+                <i class="fas fa-search text-muted"></i>
+            </span>
+            <input wire:model.live.debounce.300ms="search" 
+                   type="text"
+                   placeholder="Search zones..."
+                   class="form-control border-0" 
+                   style="min-width: 200px;">
+        </div>
+        <button wire:click="openCreate" 
+                class="btn btn-sm fw-bold shadow"
+                style="background:white; color:#4facfe;">
             <i class="fas fa-plus me-1"></i> Add Zone
         </button>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

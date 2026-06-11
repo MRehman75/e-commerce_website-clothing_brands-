@@ -7,11 +7,13 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+   use HasFactory, Notifiable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -46,4 +48,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function roles()
+{
+    return $this->belongsToMany(Role::class);
+}
+public function hasRole(string $slug): bool
+{
+    return $this->roles->contains('slug', $slug);
+}
+public function getActivitylogOptions(): LogOptions
+{
+    return LogOptions::defaults()
+        ->logOnly(['name', 'email'])
+        ->logOnlyDirty()
+        ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
+}
+
+
+
+
 }

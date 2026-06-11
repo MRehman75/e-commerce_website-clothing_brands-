@@ -45,4 +45,8 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+    public function orderItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+{
+    return $this->hasMany(\App\Models\OrderItem::class);
+}
 }

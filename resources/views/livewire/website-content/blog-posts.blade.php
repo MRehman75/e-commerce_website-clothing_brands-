@@ -1,13 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-blog me-2 text-primary"></i> Blog Posts
-        </h4>
-        <button wire:click="openCreate" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add Post
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #f953c6 0%, #b91d73 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-blog fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Blog Posts</h4>
+            <small class="text-white-50">Manage your blog posts</small>
+        </div>
     </div>
+    <button wire:click="openCreate"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#b91d73;">
+        <i class="fas fa-plus me-1"></i> Add Post
+    </button>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -25,14 +34,14 @@
                            class="form-control form-control-sm"
                            placeholder="Search posts...">
                 </div>
-                <div class="col-md-3">
-                    <select wire:model.live="filterStatus" class="form-select form-select-sm">
-                        <option value="">All Status</option>
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
-                        <option value="scheduled">Scheduled</option>
-                    </select>
-                </div>
+               <div class="col-md-3">
+    <select wire:model.live="filterStatus" class="form-select form-select-sm">
+        <option value="">🔵 All Status</option>
+        <option value="draft">📝 Draft</option>
+        <option value="published">✅ Published</option>
+        <option value="scheduled">🕐 Scheduled</option>
+    </select>
+</div>
             </div>
         </div>
     </div>

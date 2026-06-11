@@ -15,56 +15,86 @@
     @endif
 
     <!-- Stats Cards -->
-    <div class="row mb-4">
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Total Orders</h6>
-                    <h2 class="mb-0">{{ $stats['total'] ?? 0 }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-warning text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Pending</h6>
-                    <h2 class="mb-0">{{ $stats['pending'] ?? 0 }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Processing</h6>
-                    <h2 class="mb-0">{{ $stats['processing'] ?? 0 }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-secondary text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Shipped</h6>
-                    <h2 class="mb-0">{{ $stats['shipped'] ?? 0 }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Delivered</h6>
-                    <h2 class="mb-0">{{ $stats['delivered'] ?? 0 }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
-            <div class="card bg-danger text-white">
-                <div class="card-body">
-                    <h6 class="card-title">Cancelled</h6>
-                    <h2 class="mb-0">{{ $stats['cancelled'] ?? 0 }}</h2>
+   <div class="row mb-4">
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Total Orders</h6>
+                        <h2 class="mb-0">{{ $stats['total'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-shopping-cart fa-2x text-white-50"></i>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Pending</h6>
+                        <h2 class="mb-0">{{ $stats['pending'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-clock fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Processing</h6>
+                        <h2 class="mb-0">{{ $stats['processing'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-cog fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #868f96 0%, #596164 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Shipped</h6>
+                        <h2 class="mb-0">{{ $stats['shipped'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-truck fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Delivered</h6>
+                        <h2 class="mb-0">{{ $stats['delivered'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title text-white-50">Cancelled</h6>
+                        <h2 class="mb-0">{{ $stats['cancelled'] ?? 0 }}</h2>
+                    </div>
+                    <i class="fas fa-times-circle fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Filters -->
     <div class="card mb-4">
@@ -77,16 +107,16 @@
                     <input type="text" wire:model.live.debounce.300ms="search" 
                            placeholder="Search..." class="form-control">
                 </div>
-                <div class="col-md-3">
-                    <select wire:model.live="status" class="form-control">
-                        <option value="">All Status</option>
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                </div>
+               <div class="col-md-3">
+    <select wire:model.live="status" class="form-select">
+        <option value="">All Status</option>
+        <option value="pending">🕐 Pending</option>
+        <option value="processing">⚙️ Processing</option>
+        <option value="shipped">🚚 Shipped</option>
+        <option value="delivered">✅ Delivered</option>
+        <option value="cancelled">❌ Cancelled</option>
+    </select>
+</div>
                 <div class="col-md-2">
                     <input type="date" wire:model.live="dateFrom" class="form-control">
                 </div>

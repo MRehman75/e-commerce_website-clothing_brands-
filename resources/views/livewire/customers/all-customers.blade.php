@@ -1,32 +1,52 @@
 <div>
 
     {{-- Stats Cards --}}
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm text-center py-3">
-                <div class="fs-4 fw-bold text-primary">{{ $stats['total'] }}</div>
-                <div class="text-muted small">Total Customers</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm text-center py-3">
-                <div class="fs-4 fw-bold text-success">{{ $stats['active'] }}</div>
-                <div class="text-muted small">Active</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm text-center py-3">
-                <div class="fs-4 fw-bold text-warning">{{ $stats['inactive'] }}</div>
-                <div class="text-muted small">Inactive</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm text-center py-3">
-                <div class="fs-4 fw-bold text-danger">{{ $stats['blocked'] }}</div>
-                <div class="text-muted small">Blocked</div>
+   <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Total Customers</h6>
+                    <h3 class="mb-0 fw-bold">{{ $stats['total'] }}</h3>
+                </div>
+                <i class="fas fa-users fa-2x text-white-50"></i>
             </div>
         </div>
     </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Active</h6>
+                    <h3 class="mb-0 fw-bold">{{ $stats['active'] }}</h3>
+                </div>
+                <i class="fas fa-user-check fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Inactive</h6>
+                    <h3 class="mb-0 fw-bold">{{ $stats['inactive'] }}</h3>
+                </div>
+                <i class="fas fa-user-clock fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Blocked</h6>
+                    <h3 class="mb-0 fw-bold">{{ $stats['blocked'] }}</h3>
+                </div>
+                <i class="fas fa-user-slash fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     {{-- Toolbar --}}
     <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
@@ -35,12 +55,18 @@
                    type="text" placeholder="Search name, email, phone..."
                    class="form-control" style="width:250px" />
 
-            <select wire:model.live="filterStatus" class="form-select w-auto">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="blocked">Blocked</option>
-            </select>
+            <div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <i class="fas fa-filter me-1"></i>
+        {{ $filterStatus ? ucfirst($filterStatus) : 'All Status' }}
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" wire:click="$set('filterStatus', '')"><i class="fas fa-list me-2 text-secondary"></i>All Status</a></li>
+        <li><a class="dropdown-item text-success" wire:click="$set('filterStatus', 'active')"><i class="fas fa-user-check me-2"></i>Active</a></li>
+        <li><a class="dropdown-item text-warning" wire:click="$set('filterStatus', 'inactive')"><i class="fas fa-user-clock me-2"></i>Inactive</a></li>
+        <li><a class="dropdown-item text-danger" wire:click="$set('filterStatus', 'blocked')"><i class="fas fa-user-slash me-2"></i>Blocked</a></li>
+    </ul>
+</div>
 
             <select wire:model.live="perPage" class="form-select w-auto">
                 <option value="10">10 / page</option>
@@ -122,19 +148,20 @@
                             </td>
                             <td>Rs. {{ number_format($customer->total_spent, 2) }}</td>
                             <td>
-                                <div class="dropdown">
-                                    <span class="badge bg-{{ $customer->status_badge }} dropdown-toggle"
-                                          style="cursor:pointer"
-                                          data-bs-toggle="dropdown">
-                                        {{ ucfirst($customer->status) }}
-                                    </span>
-                                    <ul class="dropdown-menu dropdown-menu-sm">
-                                        <li><a class="dropdown-item" wire:click="updateStatus({{ $customer->id }}, 'active')">Active</a></li>
-                                        <li><a class="dropdown-item" wire:click="updateStatus({{ $customer->id }}, 'inactive')">Inactive</a></li>
-                                        <li><a class="dropdown-item text-danger" wire:click="updateStatus({{ $customer->id }}, 'blocked')">Blocked</a></li>
-                                    </ul>
-                                </div>
-                            </td>
+    <div class="dropdown">
+        <span class="badge bg-{{ $customer->status_badge }} dropdown-toggle"
+              style="cursor:pointer"
+              data-bs-toggle="dropdown">
+            <i class="fas fa-{{ $customer->status == 'active' ? 'user-check' : ($customer->status == 'inactive' ? 'user-clock' : 'user-slash') }} me-1"></i>
+            {{ ucfirst($customer->status) }}
+        </span>
+        <ul class="dropdown-menu dropdown-menu-sm">
+            <li><a class="dropdown-item text-success" wire:click="updateStatus({{ $customer->id }}, 'active')"><i class="fas fa-user-check me-2"></i>Active</a></li>
+            <li><a class="dropdown-item text-warning" wire:click="updateStatus({{ $customer->id }}, 'inactive')"><i class="fas fa-user-clock me-2"></i>Inactive</a></li>
+            <li><a class="dropdown-item text-danger" wire:click="updateStatus({{ $customer->id }}, 'blocked')"><i class="fas fa-user-slash me-2"></i>Blocked</a></li>
+        </ul>
+    </div>
+</td>
                             <td>
                                 <div class="d-flex gap-1">
                                     <button wire:click="openView({{ $customer->id }})"

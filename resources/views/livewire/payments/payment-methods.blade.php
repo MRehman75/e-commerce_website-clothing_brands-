@@ -1,10 +1,20 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0"><i class="fas fa-wallet me-2 text-success"></i>Payment Methods</h5>
-        <button class="btn btn-primary btn-sm" wire:click="openModal">
-            <i class="fas fa-plus me-1"></i> Add Method
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-3 p-3 rounded" 
+     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-wallet fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Payment Methods</h4>
+            <small class="text-white-50">Manage your payment methods</small>
+        </div>
     </div>
+    <button class="btn btn-white btn-sm fw-bold shadow" wire:click="openModal"
+            style="background:white; color:#667eea;">
+        <i class="fas fa-plus me-1"></i> Add Method
+    </button>
+</div>
 
     @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -14,20 +24,30 @@
     @endif
 
     <!-- Stats -->
-    <div class="row g-3 mb-3">
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm p-3">
-                <h6 class="text-muted mb-1" style="font-size:0.75rem;">Total Methods</h6>
-                <h4 class="mb-0 text-dark">{{ $total }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm p-3">
-                <h6 class="text-muted mb-1" style="font-size:0.75rem;">Active Methods</h6>
-                <h4 class="mb-0 text-success">{{ $active }}</h4>
+   <div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Total Methods</h6>
+                    <h4 class="mb-0 text-white">{{ $total }}</h4>
+                </div>
+                <i class="fas fa-wallet fa-2x text-white-50"></i>
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 text-white" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Active Methods</h6>
+                    <h4 class="mb-0 text-white">{{ $active }}</h4>
+                </div>
+                <i class="fas fa-check-circle fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Search -->
     <div class="card mb-3">
@@ -77,19 +97,21 @@
                                         {{ $method->is_active ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                            Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item small" wire:click.prevent="editMethod({{ $method->id }})"><i class="fas fa-edit me-2"></i>Edit</a></li>
-                                            <li><a class="dropdown-item small" wire:click.prevent="toggleStatus({{ $method->id }})"><i class="fas fa-toggle-on me-2"></i>Toggle Status</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item small text-danger" wire:click.prevent="deleteMethod({{ $method->id }})"><i class="fas fa-trash me-2"></i>Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                              <td>
+    <button wire:click="editMethod({{ $method->id }})"
+            class="btn btn-sm btn-warning me-1" title="Edit">
+        <i class="fas fa-edit"></i>
+    </button>
+    <button wire:click="toggleStatus({{ $method->id }})"
+            class="btn btn-sm btn-info me-1" title="Toggle Status">
+        <i class="fas fa-toggle-on"></i>
+    </button>
+    <button wire:click="deleteMethod({{ $method->id }})"
+            class="btn btn-sm btn-danger" title="Delete"
+            onclick="return confirm('Delete karna chahte ho?')">
+        <i class="fas fa-trash"></i>
+    </button>
+</td>
                             </tr>
                         @empty
                             <tr>

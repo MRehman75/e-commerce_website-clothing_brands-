@@ -1,13 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-images me-2 text-primary"></i> Home Slider
-        </h4>
-        <button wire:click="openCreate" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add Slide
-        </button>
+  <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-images fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Home Slider</h4>
+            <small class="text-white-50">Manage your home slider images</small>
+        </div>
     </div>
+    <button wire:click="openCreate"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#f5576c;">
+        <i class="fas fa-plus me-1"></i> Add Slide
+    </button>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">

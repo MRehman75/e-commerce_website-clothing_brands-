@@ -1,14 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-ad me-2 text-primary"></i> Banners
-        </h4>
-        <button wire:click="openCreate" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add Banner
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-ad fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Banners</h4>
+            <small class="text-white-50">Manage your website banners</small>
+        </div>
     </div>
-
+    <button wire:click="openCreate"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#f7971e;">
+        <i class="fas fa-plus me-1"></i> Add Banner
+    </button>
+</div>
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}
@@ -18,22 +26,22 @@
 
     {{-- Filters --}}
     <div class="card mb-4">
-        <div class="card-body py-2">
-            <div class="d-flex gap-2 flex-wrap">
-                <select wire:model.live="filterPosition" class="form-select w-auto">
-                    <option value="">All Positions</option>
-                    @foreach($positions as $key => $label)
-                        <option value="{{ $key }}">{{ $label }}</option>
-                    @endforeach
-                </select>
-                <select wire:model.live="filterStatus" class="form-select w-auto">
-                    <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
+    <div class="card-body py-2">
+        <div class="d-flex gap-2 flex-wrap">
+            <select wire:model.live="filterPosition" class="form-select w-auto">
+                <option value="">📍 All Positions</option>
+                @foreach($positions as $key => $label)
+                    <option value="{{ $key }}">{{ $label }}</option>
+                @endforeach
+            </select>
+            <select wire:model.live="filterStatus" class="form-select w-auto">
+                <option value="">🔵 All Status</option>
+                <option value="active">🟢 Active</option>
+                <option value="inactive">🔴 Inactive</option>
+            </select>
         </div>
     </div>
+</div>
 
     {{-- Banners grouped by Position --}}
     @forelse($banners as $position => $group)

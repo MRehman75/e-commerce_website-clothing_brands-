@@ -1,10 +1,15 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0"><i class="fas fa-trademark me-2 text-primary"></i>Brands</h4>
-        <button wire:click="openCreate" class="btn btn-primary">
+  <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-trademark me-2"></i>Brands</h4>
+            <small class="text-white-50">Manage your brands</small>
+        </div>
+        <button wire:click="openCreate" class="btn btn-light btn-sm">
             <i class="fas fa-plus me-1"></i> Add Brand
         </button>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">

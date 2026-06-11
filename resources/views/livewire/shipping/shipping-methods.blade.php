@@ -1,19 +1,41 @@
 <div>
-    <div class="flex items-center justify-between mb-4 gap-2 d-flex flex-wrap">
-        <div class="d-flex gap-2">
-            <input wire:model.live.debounce.300ms="search" type="text"
-                   placeholder="Search methods..." class="form-control w-auto" />
-            <select wire:model.live="filterZone" class="form-select w-auto">
-                <option value="">All Zones</option>
-                @foreach($zones as $zone)
-                    <option value="{{ $zone->id }}">{{ $zone->name }}</option>
-                @endforeach
-            </select>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded flex-wrap gap-2"
+     style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-truck fa-2x text-white"></i>
         </div>
-        <button wire:click="openCreate" class="btn btn-primary">
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Shipping Methods</h4>
+            <small class="text-white-50">Manage your shipping methods</small>
+        </div>
+    </div>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text bg-white border-0">
+                <i class="fas fa-search text-muted"></i>
+            </span>
+            <input wire:model.live.debounce.300ms="search"
+                   type="text"
+                   placeholder="Search methods..."
+                   class="form-control border-0"
+                   style="min-width: 180px;">
+        </div>
+        <select wire:model.live="filterZone" 
+                class="form-select form-select-sm border-0"
+                style="min-width: 150px;">
+            <option value="">🌍 All Zones</option>
+            @foreach($zones as $zone)
+                <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+            @endforeach
+        </select>
+        <button wire:click="openCreate"
+                class="btn btn-sm fw-bold shadow"
+                style="background:white; color:#a18cd1;">
             <i class="fas fa-plus me-1"></i> Add Method
         </button>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

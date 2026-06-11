@@ -1,10 +1,15 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0"><i class="fas fa-tags me-2 text-primary"></i>Categories</h4>
-        <button wire:click="openCreate" class="btn btn-primary">
+    <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-tags me-2"></i>Categories</h4>
+            <small class="text-white-50">Manage your categories</small>
+        </div>
+        <button wire:click="openCreate" class="btn btn-light btn-sm">
             <i class="fas fa-plus me-1"></i> Add Category
         </button>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">

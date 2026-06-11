@@ -1,14 +1,22 @@
 <div>
     {{-- ── Header ── --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-credit-card me-2 text-primary"></i> Payment Gateways
-        </h4>
-        <button wire:click="openCreate" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add Gateway
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-credit-card fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Payment Gateways</h4>
+            <small class="text-white-50">Manage your payment gateways</small>
+        </div>
     </div>
-
+    <button wire:click="openCreate"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#43e97b;">
+        <i class="fas fa-plus me-1"></i> Add Gateway
+    </button>
+</div>
     {{-- ── Flash Message ── --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -30,12 +38,12 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select wire:model.live="filterStatus" class="form-select form-select-sm">
-                        <option value="">All Status</option>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
-                </div>
+    <select wire:model.live="filterStatus" class="form-select form-select-sm">
+        <option value="">🔵 All Status</option>
+        <option value="1">🟢 Active</option>
+        <option value="0">🔴 Inactive</option>
+    </select>
+</div>
                 <div class="col-md-3 text-end">
                     <span class="badge bg-secondary">
                         {{ $this->gateways->count() }} gateway(s)

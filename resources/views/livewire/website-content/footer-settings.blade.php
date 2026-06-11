@@ -1,13 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-shoe-prints me-2 text-primary"></i> Footer Settings
-        </h4>
-        <button wire:click="saveSettings" class="btn btn-primary">
-            <i class="fas fa-save me-1"></i> Save Settings
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #1a252f 0%, #2d3e4f 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-shoe-prints fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Footer Settings</h4>
+            <small class="text-white-50">Manage your website footer</small>
+        </div>
     </div>
+    <button wire:click="saveSettings"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#1a252f;">
+        <i class="fas fa-save me-1"></i> Save Settings
+    </button>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -17,24 +26,25 @@
     @endif
 
     {{-- Tabs --}}
-    <ul class="nav nav-tabs mb-4">
-        @foreach([
-            'general'  => ['icon'=>'fa-cog',          'label'=>'General'],
-            'contact'  => ['icon'=>'fa-phone',         'label'=>'Contact'],
-            'social'   => ['icon'=>'fa-share-alt',     'label'=>'Social'],
-            'newsletter'=>['icon'=>'fa-envelope',      'label'=>'Newsletter'],
-            'apps'     => ['icon'=>'fa-mobile-alt',    'label'=>'App Links'],
-            'payments' => ['icon'=>'fa-credit-card',   'label'=>'Payments'],
-            'columns'  => ['icon'=>'fa-columns',       'label'=>'Columns & Links'],
-        ] as $tab => $info)
-        <li class="nav-item">
-            <button wire:click="$set('activeTab','{{ $tab }}')"
-                    class="nav-link {{ $activeTab === $tab ? 'active' : '' }}">
-                <i class="fas {{ $info['icon'] }} me-1"></i> {{ $info['label'] }}
-            </button>
-        </li>
-        @endforeach
-    </ul>
+    <div class="d-flex gap-2 flex-wrap mb-4">
+    @foreach([
+        'general'   => ['icon'=>'fa-cog',          'label'=>'General',        'color'=>'#667eea'],
+        'contact'   => ['icon'=>'fa-phone',         'label'=>'Contact',        'color'=>'#11998e'],
+        'social'    => ['icon'=>'fa-share-alt',     'label'=>'Social',         'color'=>'#f5576c'],
+        'newsletter'=> ['icon'=>'fa-envelope',      'label'=>'Newsletter',     'color'=>'#f7971e'],
+        'apps'      => ['icon'=>'fa-mobile-alt',    'label'=>'App Links',      'color'=>'#4facfe'],
+        'payments'  => ['icon'=>'fa-credit-card',   'label'=>'Payments',       'color'=>'#a18cd1'],
+        'columns'   => ['icon'=>'fa-columns',       'label'=>'Columns & Links','color'=>'#43e97b'],
+    ] as $tab => $info)
+    <button wire:click="$set('activeTab','{{ $tab }}')"
+            class="btn btn-sm fw-bold shadow-sm"
+            style="{{ $activeTab === $tab 
+                ? 'background: linear-gradient(135deg, '.$info['color'].' 0%, '.$info['color'].'99 100%); color:white;' 
+                : 'background:white; color:'.$info['color'].'; border: 2px solid '.$info['color'].';' }}">
+        <i class="fas {{ $info['icon'] }} me-1"></i> {{ $info['label'] }}
+    </button>
+    @endforeach
+</div>
 
     {{-- ── TAB: GENERAL ── --}}
     @if($activeTab === 'general')

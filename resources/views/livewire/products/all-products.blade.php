@@ -1,11 +1,16 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0"><i class="fas fa-box-open me-2 text-primary"></i>All Products</h4>
-        <a href="{{ route('admin.products.create') }}" wire:navigate class="btn btn-primary">
+   <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-box-open me-2"></i>All Products</h4>
+            <small class="text-white-50">Manage your products</small>
+        </div>
+        <a href="{{ route('admin.products.create') }}" wire:navigate class="btn btn-light btn-sm">
             <i class="fas fa-plus me-1"></i> Add Product
         </a>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -23,29 +28,47 @@
                            class="form-control" placeholder="Search by name or SKU...">
                 </div>
                 <div class="col-md-3">
-                    <select wire:model.live="filterCategory" class="form-select">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select wire:model.live="filterBrand" class="form-select">
-                        <option value="">All Brands</option>
-                        @foreach($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select wire:model.live="filterStatus" class="form-select">
-                        <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                        <option value="draft">Draft</option>
-                    </select>
-                </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-tags me-1"></i>
+            {{ $filterCategory ? $categories->find($filterCategory)?->name : 'All Categories' }}
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" wire:click="$set('filterCategory', '')"><i class="fas fa-list me-2 text-secondary"></i>All Categories</a></li>
+            @foreach($categories as $cat)
+            <li><a class="dropdown-item" wire:click="$set('filterCategory', '{{ $cat->id }}')"><i class="fas fa-tag me-2 text-primary"></i>{{ $cat->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+               <div class="col-md-2">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-trademark me-1"></i>
+            {{ $filterBrand ? $brands->find($filterBrand)?->name : 'All Brands' }}
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" wire:click="$set('filterBrand', '')"><i class="fas fa-list me-2 text-secondary"></i>All Brands</a></li>
+            @foreach($brands as $brand)
+            <li><a class="dropdown-item" wire:click="$set('filterBrand', '{{ $brand->id }}')"><i class="fas fa-trademark me-2 text-primary"></i>{{ $brand->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-filter me-1"></i>
+            {{ $filterStatus ? ucfirst($filterStatus) : 'All Status' }}
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" wire:click="$set('filterStatus', '')"><i class="fas fa-list me-2 text-secondary"></i>All Status</a></li>
+            <li><a class="dropdown-item text-success" wire:click="$set('filterStatus', 'active')"><i class="fas fa-check-circle me-2"></i>Active</a></li>
+            <li><a class="dropdown-item text-warning" wire:click="$set('filterStatus', 'inactive')"><i class="fas fa-pause-circle me-2"></i>Inactive</a></li>
+            <li><a class="dropdown-item text-secondary" wire:click="$set('filterStatus', 'draft')"><i class="fas fa-file me-2"></i>Draft</a></li>
+        </ul>
+    </div>
+</div>
             </div>
         </div>
     </div>

@@ -1,7 +1,13 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0"><i class="fas fa-warehouse me-2 text-primary"></i>Inventory</h4>
+   <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #005c97 0%, #363795 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-warehouse me-2"></i>Inventory</h4>
+            <small class="text-white-50">Manage your stock</small>
+        </div>
+        <i class="fas fa-boxes fa-2x text-white-50"></i>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -11,47 +17,41 @@
     @endif
 
     {{-- Summary Cards --}}
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="border-left: 4px solid #198754 !important;">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted small mb-1">In Stock</p>
-                        <h3 class="mb-0 fw-bold text-success">{{ number_format($inStock) }}</h3>
-                    </div>
-                    <div class="bg-success bg-opacity-10 rounded-circle p-3">
-                        <i class="fas fa-check-circle text-success fs-5"></i>
-                    </div>
+   <div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">In Stock</h6>
+                    <h3 class="mb-0 fw-bold">{{ number_format($inStock) }}</h3>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="border-left: 4px solid #ffc107 !important;">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted small mb-1">Low Stock (≤10)</p>
-                        <h3 class="mb-0 fw-bold text-warning">{{ number_format($lowStock) }}</h3>
-                    </div>
-                    <div class="bg-warning bg-opacity-10 rounded-circle p-3">
-                        <i class="fas fa-exclamation-triangle text-warning fs-5"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="border-left: 4px solid #dc3545 !important;">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted small mb-1">Out of Stock</p>
-                        <h3 class="mb-0 fw-bold text-danger">{{ number_format($outOfStock) }}</h3>
-                    </div>
-                    <div class="bg-danger bg-opacity-10 rounded-circle p-3">
-                        <i class="fas fa-times-circle text-danger fs-5"></i>
-                    </div>
-                </div>
+                <i class="fas fa-check-circle fa-2x text-white-50"></i>
             </div>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Low Stock (≤10)</h6>
+                    <h3 class="mb-0 fw-bold">{{ number_format($lowStock) }}</h3>
+                </div>
+                <i class="fas fa-exclamation-triangle fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Out of Stock</h6>
+                    <h3 class="mb-0 fw-bold">{{ number_format($outOfStock) }}</h3>
+                </div>
+                <i class="fas fa-times-circle fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     {{-- Filters --}}
     <div class="card mb-4">
@@ -61,22 +61,38 @@
                     <input wire:model.live.debounce.300ms="search" type="text"
                            class="form-control" placeholder="Search by name or SKU...">
                 </div>
-                <div class="col-md-3">
-                    <select wire:model.live="filterCategory" class="form-select">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select wire:model.live="filterStock" class="form-select">
-                        <option value="">All Stock Levels</option>
-                        <option value="in">In Stock (&gt;10)</option>
-                        <option value="low">Low Stock (1–10)</option>
-                        <option value="out">Out of Stock</option>
-                    </select>
-                </div>
+               <div class="col-md-3">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-tags me-1"></i>
+            {{ $filterCategory ? $categories->find($filterCategory)?->name : 'All Categories' }}
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" wire:click="$set('filterCategory', '')"><i class="fas fa-list me-2 text-secondary"></i>All Categories</a></li>
+            @foreach($categories as $cat)
+            <li><a class="dropdown-item" wire:click="$set('filterCategory', '{{ $cat->id }}')"><i class="fas fa-tag me-2 text-primary"></i>{{ $cat->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-boxes me-1"></i>
+            @if($filterStock == 'in') In Stock
+            @elseif($filterStock == 'low') Low Stock
+            @elseif($filterStock == 'out') Out of Stock
+            @else All Stock Levels
+            @endif
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" wire:click="$set('filterStock', '')"><i class="fas fa-list me-2 text-secondary"></i>All Stock Levels</a></li>
+            <li><a class="dropdown-item text-success" wire:click="$set('filterStock', 'in')"><i class="fas fa-check-circle me-2"></i>In Stock (&gt;10)</a></li>
+            <li><a class="dropdown-item text-warning" wire:click="$set('filterStock', 'low')"><i class="fas fa-exclamation-triangle me-2"></i>Low Stock (1–10)</a></li>
+            <li><a class="dropdown-item text-danger" wire:click="$set('filterStock', 'out')"><i class="fas fa-times-circle me-2"></i>Out of Stock</a></li>
+        </ul>
+    </div>
+</div>
             </div>
         </div>
     </div>

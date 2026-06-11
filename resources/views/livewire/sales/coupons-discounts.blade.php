@@ -1,11 +1,15 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0"><i class="fas fa-ticket-alt me-2 text-primary"></i>Coupons & Discounts</h5>
-        <button class="btn btn-primary btn-sm" wire:click="openModal">
+   <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-ticket-alt me-2"></i>Coupons & Discounts</h4>
+            <small class="text-white-50">Manage your coupons</small>
+        </div>
+        <button class="btn btn-light btn-sm" wire:click="openModal">
             <i class="fas fa-plus me-1"></i> Add Coupon
         </button>
     </div>
-
+</div>
     @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('message') }}
@@ -14,21 +18,30 @@
     @endif
 
     <!-- Stats -->
-    <div class="row g-3 mb-3">
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm p-3">
-                <h6 class="text-muted mb-1" style="font-size:0.75rem;">Total Coupons</h6>
-                <h4 class="mb-0 text-dark">{{ $total }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm p-3">
-                <h6 class="text-muted mb-1" style="font-size:0.75rem;">Active Coupons</h6>
-                <h4 class="mb-0 text-success">{{ $active }}</h4>
+   <div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Total Coupons</h6>
+                    <h3 class="mb-0 fw-bold">{{ $total }}</h3>
+                </div>
+                <i class="fas fa-ticket-alt fa-2x text-white-50"></i>
             </div>
         </div>
     </div>
-
+    <div class="col-md-3">
+        <div class="card border-0 text-white p-3" style="background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1" style="font-size:0.75rem;">Active Coupons</h6>
+                    <h3 class="mb-0 fw-bold">{{ $active }}</h3>
+                </div>
+                <i class="fas fa-check-circle fa-2x text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Search -->
     <div class="card mb-3">
         <div class="card-body py-2">
@@ -83,19 +96,23 @@
                                         {{ ucfirst($coupon->status) }}
                                     </span>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                            Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item small" wire:click.prevent="editCoupon({{ $coupon->id }})"><i class="fas fa-edit me-2"></i>Edit</a></li>
-                                            <li><a class="dropdown-item small" wire:click.prevent="toggleStatus({{ $coupon->id }})"><i class="fas fa-toggle-on me-2"></i>Toggle Status</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item small text-danger" wire:click.prevent="deleteCoupon({{ $coupon->id }})"><i class="fas fa-trash me-2"></i>Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                               <td>
+    <div class="btn-group">
+        <button wire:click="editCoupon({{ $coupon->id }})"
+                class="btn btn-sm btn-warning text-white" title="Edit">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button wire:click="toggleStatus({{ $coupon->id }})"
+                class="btn btn-sm btn-info text-white" title="Toggle Status">
+            <i class="fas fa-toggle-on"></i>
+        </button>
+        <button wire:click="deleteCoupon({{ $coupon->id }})"
+                class="btn btn-sm btn-danger" title="Delete"
+                onclick="return confirm('Delete karna chahte ho?')">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</td>
                             </tr>
                         @empty
                             <tr>

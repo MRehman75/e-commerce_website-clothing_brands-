@@ -1,14 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-bars me-2 text-primary"></i> Menu Manager
-        </h4>
-        <button wire:click="openCreateMenu" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> New Menu
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-bars fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Menu Manager</h4>
+            <small class="text-white-50">Manage your website menus</small>
+        </div>
     </div>
-
+    <button wire:click="openCreateMenu"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#43e97b;">
+        <i class="fas fa-plus me-1"></i> New Menu
+    </button>
+</div>
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}

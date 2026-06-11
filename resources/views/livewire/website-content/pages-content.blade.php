@@ -1,13 +1,22 @@
 <div>
     {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-file-alt me-2 text-primary"></i> Pages Content
-        </h4>
-        <button wire:click="openCreate" class="btn btn-primary">
-            <i class="fas fa-plus me-1"></i> Add Page
-        </button>
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-file-alt fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">Pages Content</h4>
+            <small class="text-white-50">Manage your website pages</small>
+        </div>
     </div>
+    <button wire:click="openCreate"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#4776e6;">
+        <i class="fas fa-plus me-1"></i> Add Page
+    </button>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -31,13 +40,13 @@
                            type="text" class="form-control"
                            placeholder="Search by title or slug...">
                 </div>
-                <div class="col-md-3">
-                    <select wire:model.live="filterType" class="form-select">
-                        <option value="">All Pages</option>
-                        <option value="fixed">Fixed Pages</option>
-                        <option value="dynamic">Dynamic Pages</option>
-                    </select>
-                </div>
+               <div class="col-md-3">
+    <select wire:model.live="filterType" class="form-select">
+        <option value="">📋 All Pages</option>
+        <option value="fixed">📌 Fixed Pages</option>
+        <option value="dynamic">⚡ Dynamic Pages</option>
+    </select>
+</div>
             </div>
         </div>
     </div>

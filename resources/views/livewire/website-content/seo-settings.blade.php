@@ -1,12 +1,21 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-chart-line me-2 text-primary"></i> SEO Settings
-        </h4>
-        <button wire:click="save" class="btn btn-primary">
-            <i class="fas fa-save me-1"></i> Save Settings
-        </button>
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-chart-line fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">SEO Settings</h4>
+            <small class="text-white-50">Manage your website SEO</small>
+        </div>
     </div>
+    <button wire:click="save"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#11998e;">
+        <i class="fas fa-save me-1"></i> Save Settings
+    </button>
+</div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">

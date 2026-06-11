@@ -1,9 +1,13 @@
 <div>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0"><i class="fas fa-spinner me-2 text-info"></i>Processing Orders
-            <span class="badge bg-info ms-2">{{ $total }}</span>
-        </h5>
+   <div class="card border-0 text-white p-3 mb-4" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="mb-0 text-white"><i class="fas fa-spinner me-2"></i>Processing Orders</h4>
+            <small class="text-white-50">Total processing orders</small>
+        </div>
+        <div class="text-white" style="font-size:2.5rem; font-weight:700;">{{ $total }}</div>
     </div>
+</div>
 
     @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -59,27 +63,29 @@
                                     <small class="text-muted">{{ $order->customer_email }}</small>
                                 </td>
                                 <td>{{ $order->product_name }}</td>
-                                <td><strong>${{ number_format($order->total, 2) }}</strong></td>
+                                <td><strong>Rs.{{ number_format($order->total, 2) }}</strong></td>
                                 <td>
                                     <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : ($order->payment_status == 'refunded' ? 'warning' : 'danger') }}">
                                         {{ ucfirst($order->payment_status) }}
                                     </span>
                                 </td>
                                 <td>{{ $order->created_at->format('d M Y') }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                            Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item small" href="#"><i class="fas fa-eye me-2"></i>View</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item small text-primary" wire:click.prevent="updateStatus({{ $order->id }}, 'shipped')"><i class="fas fa-truck me-2"></i>Mark Shipped</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item small text-danger" wire:click.prevent="deleteOrder({{ $order->id }})"><i class="fas fa-trash me-2"></i>Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                               <td>
+    <div class="btn-group">
+        <a href="#" class="btn btn-sm btn-info text-white" title="View">
+            <i class="fas fa-eye"></i>
+        </a>
+        <button wire:click="updateStatus({{ $order->id }}, 'shipped')"
+                class="btn btn-sm btn-primary text-white" title="Mark Shipped">
+            <i class="fas fa-truck"></i>
+        </button>
+        <button wire:click="deleteOrder({{ $order->id }})"
+                class="btn btn-sm btn-danger" title="Delete"
+                onclick="return confirm('Delete karna chahte ho?')">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</td>
                             </tr>
                         @empty
                             <tr>

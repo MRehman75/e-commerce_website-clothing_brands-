@@ -1,13 +1,22 @@
 <div>
     {{-- ── Header ── --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">
-            <i class="fas fa-cogs me-2 text-primary"></i> General Settings
-        </h4>
-        <button wire:click="save" class="btn btn-primary">
-            <i class="fas fa-save me-1"></i> Save Settings
-        </button>
+   <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-cogs fa-2x text-white"></i>
+        </div>
+        <div>
+            <h4 class="mb-0 text-white fw-bold">General Settings</h4>
+            <small class="text-white-50">Manage your website settings</small>
+        </div>
     </div>
+    <button wire:click="save"
+            class="btn btn-sm fw-bold shadow"
+            style="background:white; color:#667eea;">
+        <i class="fas fa-save me-1"></i> Save Settings
+    </button>
+</div>
 
     {{-- ── Flash Messages ── --}}
     @if(session('success'))
@@ -24,30 +33,36 @@
     @endif
 
     {{-- ── Tabs ── --}}
-    <ul class="nav nav-tabs mb-4">
-        @foreach([
-            'site'        => ['icon' => 'fa-globe',        'label' => 'Site Info'],
-            'seo'         => ['icon' => 'fa-search',       'label' => 'SEO'],
-            'currency'    => ['icon' => 'fa-dollar-sign',  'label' => 'Currency & Language'],
-            'mail'        => ['icon' => 'fa-envelope',     'label' => 'Email / SMTP'],
-            'social'      => ['icon' => 'fa-share-alt',    'label' => 'Social Links'],
-            'maintenance' => ['icon' => 'fa-tools',        'label' => 'Maintenance'],
-        ] as $tab => $info)
-        <li class="nav-item">
-            <button wire:click="$set('activeTab', '{{ $tab }}')"
-                    class="nav-link {{ $activeTab === $tab ? 'active' : '' }}">
-                <i class="fas {{ $info['icon'] }} me-1"></i> {{ $info['label'] }}
-            </button>
-        </li>
-        @endforeach
-    </ul>
-
+    <div class="d-flex gap-2 flex-wrap mb-4">
+    @foreach([
+        'site'        => ['icon' => 'fa-globe',       'label' => 'Site Info',           'color' => '#667eea'],
+        'seo'         => ['icon' => 'fa-search',      'label' => 'SEO',                 'color' => '#11998e'],
+        'currency'    => ['icon' => 'fa-dollar-sign', 'label' => 'Currency & Language', 'color' => '#f7971e'],
+        'mail'        => ['icon' => 'fa-envelope',    'label' => 'Email / SMTP',        'color' => '#f5576c'],
+        'social'      => ['icon' => 'fa-share-alt',   'label' => 'Social Links',        'color' => '#4facfe'],
+        'maintenance' => ['icon' => 'fa-tools',       'label' => 'Maintenance',         'color' => '#a18cd1'],
+    ] as $tab => $info)
+    <button wire:click="$set('activeTab', '{{ $tab }}')"
+            class="btn btn-sm fw-bold shadow-sm"
+            style="{{ $activeTab === $tab
+                ? 'background: linear-gradient(135deg, '.$info['color'].' 0%, '.$info['color'].'99 100%); color:white;'
+                : 'background:white; color:'.$info['color'].'; border: 2px solid '.$info['color'].';' }}">
+        <i class="fas {{ $info['icon'] }} me-1"></i> {{ $info['label'] }}
+    </button>
+    @endforeach
+</div>
     {{-- TAB: SITE INFO --}}
     @if($activeTab === 'site')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-globe me-2 text-primary"></i> Site Information
+        <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-globe text-white"></i>
         </div>
+        <span>Site Information</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-6">
@@ -130,9 +145,15 @@
     {{-- TAB: SEO --}}
     @if($activeTab === 'seo')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-search me-2 text-primary"></i> SEO Settings
+        <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-search text-white"></i>
         </div>
+        <span>SEO Settings</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-6">
@@ -200,9 +221,15 @@
     {{-- TAB: CURRENCY & LANGUAGE --}}
     @if($activeTab === 'currency')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-dollar-sign me-2 text-primary"></i> Currency & Language
+        <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-dollar-sign text-white"></i>
         </div>
+        <span>Currency & Language</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-4">
@@ -275,9 +302,15 @@
     {{-- TAB: EMAIL / SMTP --}}
     @if($activeTab === 'mail')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-envelope me-2 text-primary"></i> Email / SMTP Settings
+        <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-envelope text-white"></i>
         </div>
+        <span>Email / SMTP Settings</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-4">
@@ -371,9 +404,15 @@
     {{-- TAB: SOCIAL LINKS --}}
     @if($activeTab === 'social')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-share-alt me-2 text-primary"></i> Social Links
+       <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-share-alt text-white"></i>
         </div>
+        <span>Social Links</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 @foreach([
@@ -407,9 +446,15 @@
     {{-- TAB: MAINTENANCE --}}
     @if($activeTab === 'maintenance')
     <div class="card shadow-sm">
-        <div class="card-header bg-white fw-bold">
-            <i class="fas fa-tools me-2 text-primary"></i> Maintenance Mode
+       <div class="card-header fw-bold text-white p-3"
+     style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+    <div class="d-flex align-items-center gap-2">
+        <div class="bg-white bg-opacity-25 p-2 rounded-circle">
+            <i class="fas fa-tools text-white"></i>
         </div>
+        <span>Maintenance Mode</span>
+    </div>
+</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-12">

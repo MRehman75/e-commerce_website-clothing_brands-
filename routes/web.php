@@ -5,9 +5,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardController;
 
+
+// ─── Frontend Routes ──────────────────────────────────────────────────────────
+Route::get('/products', \App\Livewire\Frontend\ProductList::class)->name('products');
+Route::get('/cart',     \App\Livewire\Frontend\CartPage::class)->name('cart');
+Route::get('/checkout', \App\Livewire\Frontend\Checkout::class)->name('checkout');
+ 
+// Order Success Page
+Route::get('/order/success/{orderNumber}', function ($orderNumber) {
+    $order = \App\Models\Order::where('order_number', $orderNumber)->firstOrFail();
+    return view('frontend.order-success', compact('order'));
+})->name('order.success');
+
+ // Dashboard
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Dashboard
+   
    // Dashboard
 Route::get('/', \App\Livewire\Dashboard::class)->name('dashboard');
 Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
