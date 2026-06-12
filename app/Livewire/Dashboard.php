@@ -30,126 +30,152 @@ class Dashboard extends Component
 {
     public function render()
     {
-        $totalOrders = Order::count();
-        $totalRevenue = Order::sum('total');
-        $pendingOrders = Order::where('status', 'pending')->count();
+        $totalOrders      = Order::count();
+        $totalRevenue     = Order::sum('total');
+        $pendingOrders    = Order::where('status', 'pending')->count();
         $processingOrders = Order::where('status', 'processing')->count();
-        $shippedOrders = Order::where('status', 'shipped')->count();
-        $deliveredOrders = Order::where('status', 'delivered')->count();
-        $cancelledOrders = Order::where('status', 'cancelled')->count();
-        $activeOrders = Order::whereIn('status', ['pending', 'processing', 'shipped'])->count();
-        $recentOrders = Order::latest()->take(10)->get();
-         $totalCustomers = User::count(); // ← Customer count
-         $totalCoupons = Coupon::count();
-$activeCoupons = Coupon::where('is_active', true)->count();
-$totalFlashSales = FlashSale::count();
-$activeFlashSales = FlashSale::where('is_active', true)->count();
-$totalProducts = Product::count();
-$activeProducts = Product::where('status', 'active')->count();
-$totalCategories = Category::count();
-$totalBrands = Brand::count();
-$totalTransactions = Transaction::count();
-$completedTransactions = Transaction::where('status', 'completed')->count();
-$totalPaymentMethods = PaymentMethod::count();
-$activePaymentMethods = PaymentMethod::where('is_active', true)->count();
-$totalShippingZones = ShippingZone::count();
-$activeShippingZones = ShippingZone::where('is_active', true)->count();
-$totalShippingMethods = ShippingMethod::count();
-$activeShippingMethods = ShippingMethod::where('is_active', true)->count();
-$totalSalesRevenue = Order::where('payment_status', 'paid')->sum('total');
-$monthlySales = Order::whereMonth('created_at', now()->month)->sum('total');
-$totalProductsSold = Order::sum('total_amount');
-$lowStockProducts = Product::where('stock', '<=', 10)->count();
-$totalUsers = User::count();
-$verifiedUsers = User::whereNotNull('email_verified_at')->count();
-$unverifiedUsers = User::whereNull('email_verified_at')->count();
-$newUsersThisMonth = User::whereMonth('created_at', now()->month)->count();
-$totalSliders = HomeSlider::count();
-$activeSliders = HomeSlider::where('is_active', true)->count();
-$totalPages = Page::count();
-$activePages = Page::where('is_active', true)->count();
-$totalBanners = Banner::count();
-$activeBanners = Banner::where('is_active', true)->count();
-$totalMenus = Menu::count();
-$totalBlogPosts = BlogPost::count();
-$publishedBlogPosts = BlogPost::where('status', 'published')->count();
-$generalSettings = GeneralSetting::first();
-$totalPaymentGateways = PaymentGateway::count();
-$activePaymentGateways = PaymentGateway::where('is_active', true)->count();
-$maintenanceMode = $generalSettings ? $generalSettings->maintenance_mode : false;
-$totalActivityLogs = ActivityLog::count();
-$todayActivityLogs = ActivityLog::whereDate('created_at', today())->count();
-$newCustomersThisMonth = User::whereMonth('created_at', now()->month)->count();
+        $shippedOrders    = Order::where('status', 'shipped')->count();
+        $deliveredOrders  = Order::where('status', 'delivered')->count();
+        $cancelledOrders  = Order::where('status', 'cancelled')->count();
+        $activeOrders     = Order::whereIn('status', ['pending', 'processing', 'shipped'])->count();
+        $recentOrders     = Order::latest()->take(10)->get();
+        // ✅ Yeh add karo
+$totalCustomers   = User::count();
+$totalCoupons     = Coupon::count();
+$activeCoupons    = Coupon::where('is_active', true)->count();
+$totalFlashSales  = FlashSale::count();
 
 
-        // Chart Data - Last 30 days
+
+        $activeFlashSales     = FlashSale::where('is_active', true)->count();
+        $totalProducts        = Product::count();
+        $activeProducts       = Product::where('status', 'active')->count();
+        $totalCategories      = Category::count();
+        $totalBrands          = Brand::count();
+        $totalTransactions    = Transaction::count();
+        $completedTransactions = Transaction::where('status', 'completed')->count();
+        $totalPaymentMethods  = PaymentMethod::count();
+        $activePaymentMethods = PaymentMethod::where('is_active', true)->count();
+        $totalShippingZones   = ShippingZone::count();
+        $activeShippingZones  = ShippingZone::where('is_active', true)->count();
+        $totalShippingMethods = ShippingMethod::count();
+        $activeShippingMethods = ShippingMethod::where('is_active', true)->count();
+        $totalSalesRevenue    = Order::where('payment_status', 'paid')->sum('total');
+        $monthlySales         = Order::whereMonth('created_at', now()->month)->sum('total');
+       // Naya - sahi
+$totalProductsSold = Order::sum('total');
+        $lowStockProducts     = Product::where('stock', '<=', 10)->count();
+        $totalUsers           = User::count();
+        $verifiedUsers        = User::whereNotNull('email_verified_at')->count();
+        $unverifiedUsers      = User::whereNull('email_verified_at')->count();
+        $newUsersThisMonth    = User::whereMonth('created_at', now()->month)->count();
+        $totalSliders         = HomeSlider::count();
+        $activeSliders        = HomeSlider::where('is_active', true)->count();
+        $totalPages           = Page::count();
+        $activePages          = Page::where('is_active', true)->count();
+        $totalBanners         = Banner::count();
+        $activeBanners        = Banner::where('is_active', true)->count();
+        $totalMenus           = Menu::count();
+        $totalBlogPosts       = BlogPost::count();
+        $publishedBlogPosts   = BlogPost::where('status', 'published')->count();
+        $generalSettings      = GeneralSetting::first();
+        $totalPaymentGateways = PaymentGateway::count();
+        $activePaymentGateways = PaymentGateway::where('is_active', true)->count();
+        $maintenanceMode      = $generalSettings ? $generalSettings->maintenance_mode : false;
+        $totalActivityLogs    = ActivityLog::count();
+        $todayActivityLogs    = ActivityLog::whereDate('created_at', today())->count();
+        $newCustomersThisMonth = User::whereMonth('created_at', now()->month)->count();
+
+        // ── NEW VARIABLES ──────────────────────────────────────────
+        $todayRevenue  = Order::whereDate('created_at', today())->sum('total');
+        $todayOrders   = Order::whereDate('created_at', today())->count();
+        $weekRevenue   = Order::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->sum('total');
+        $weekOrders    = Order::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $avgOrderValue = $totalOrders > 0 ? round($totalRevenue / $totalOrders, 0) : 0;
+
+        // Growth % vs yesterday
+        $yesterdayRevenue  = Order::whereDate('created_at', today()->subDay())->sum('total');
+        $yesterdayOrders   = Order::whereDate('created_at', today()->subDay())->count();
+        $revenueGrowth     = $yesterdayRevenue > 0 ? round((($todayRevenue - $yesterdayRevenue) / $yesterdayRevenue) * 100, 1) : 0;
+        $ordersGrowth      = $yesterdayOrders  > 0 ? round((($todayOrders  - $yesterdayOrders)  / $yesterdayOrders)  * 100, 1) : 0;
+        $lastMonthCustomers = User::whereMonth('created_at', now()->subMonth()->month)->count();
+        $customersGrowth   = $lastMonthCustomers > 0 ? round((($newCustomersThisMonth - $lastMonthCustomers) / $lastMonthCustomers) * 100, 1) : 0;
+
+        // Top 5 selling products
+        $topProducts = Product::withSum('orderItems as total_sold', 'quantity')
+            ->orderByDesc('total_sold')
+            ->take(5)
+            ->get();
+
+        // Top 5 customers by spending
+        $topCustomers = User::withSum('orders as total_spent', 'total')
+            ->withCount('orders')
+            ->orderByDesc('total_spent')
+            ->take(5)
+            ->get();
+
+        // Low stock product list
+        $lowStockList = Product::where('stock', '<=', 10)
+            ->orderBy('stock')
+            ->take(10)
+            ->get(['name', 'stock']);
+
+        // Monthly revenue data (current year)
+        $monthlyRevenueData = [];
+        $monthlyLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        for ($m = 1; $m <= 12; $m++) {
+            $monthlyRevenueData[] = Order::whereYear('created_at', now()->year)
+                ->whereMonth('created_at', $m)
+                ->sum('total');
+        }
+
+        // This week orders per day (Mon–Sun)
+        $weekOrdersData = [];
+        $startOfWeek = now()->startOfWeek();
+        for ($d = 0; $d < 7; $d++) {
+            $weekOrdersData[] = Order::whereDate('created_at', $startOfWeek->copy()->addDays($d))->count();
+        }
+
+        // Failed payments
+        $failedPayments = Transaction::where('status', 'failed')
+            ->whereDate('created_at', today())
+            ->count();
+
+        // ── CHART DATA — Last 30 days ──────────────────────────────
         $chartLabels = [];
         $revenueData = [];
-        $ordersData = [];
-
+        $ordersData  = [];
         for ($i = 29; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i);
+            $date          = Carbon::now()->subDays($i);
             $chartLabels[] = $date->format('d M');
-
             $revenueData[] = Order::whereDate('created_at', $date)->sum('total');
-            $ordersData[] = Order::whereDate('created_at', $date)->count();
-
+            $ordersData[]  = Order::whereDate('created_at', $date)->count();
         }
 
         return view('livewire.dashboard', compact(
-            'totalOrders',
-            'totalRevenue',
-            'pendingOrders',
-            'processingOrders',
-            'shippedOrders',
-            'deliveredOrders',
-            'cancelledOrders',
-            'activeOrders',
-            'recentOrders',
-            'chartLabels',
-            'revenueData',
-            'ordersData',
-             'totalCustomers', // ← add karo
-             'totalCoupons',
-'activeCoupons',
-'totalFlashSales',
-'activeFlashSales',
-'totalProducts',
-'activeProducts',
-'totalCategories',
-'totalBrands',
-'totalTransactions',
-'completedTransactions',
-'totalPaymentMethods',
-'activePaymentMethods',
-'totalShippingZones',
-'activeShippingZones',
-'totalShippingMethods',
-'activeShippingMethods',
-'totalSalesRevenue',
-'monthlySales',
-'totalProductsSold',
-'lowStockProducts',
-'totalUsers',
-'verifiedUsers',
-'unverifiedUsers',
-'newUsersThisMonth',
-'totalSliders',
-'activeSliders',
-'totalPages',
-'activePages',
-'totalBanners',
-'activeBanners',
-'totalMenus',
-'totalBlogPosts',
-'publishedBlogPosts',
-'generalSettings',
-'totalPaymentGateways',
-'activePaymentGateways',
-'maintenanceMode',
-'totalActivityLogs',
-'todayActivityLogs',
-'newCustomersThisMonth',
+            'totalOrders', 'totalRevenue', 'pendingOrders', 'processingOrders',
+            'shippedOrders', 'deliveredOrders', 'cancelledOrders', 'activeOrders',
+            'recentOrders', 'chartLabels', 'revenueData', 'ordersData',
+            'totalCustomers', 'totalCoupons', 'activeCoupons',
+            'totalFlashSales', 'activeFlashSales',
+            'totalProducts', 'activeProducts', 'totalCategories', 'totalBrands',
+            'totalTransactions', 'completedTransactions',
+            'totalPaymentMethods', 'activePaymentMethods',
+            'totalShippingZones', 'activeShippingZones',
+            'totalShippingMethods', 'activeShippingMethods',
+            'totalSalesRevenue', 'monthlySales', 'totalProductsSold', 'lowStockProducts',
+            'totalUsers', 'verifiedUsers', 'unverifiedUsers', 'newUsersThisMonth',
+            'totalSliders', 'activeSliders', 'totalPages', 'activePages',
+            'totalBanners', 'activeBanners', 'totalMenus',
+            'totalBlogPosts', 'publishedBlogPosts',
+            'generalSettings', 'totalPaymentGateways', 'activePaymentGateways',
+            'maintenanceMode', 'totalActivityLogs', 'todayActivityLogs',
+            // NEW
+            'todayRevenue', 'todayOrders', 'weekRevenue', 'weekOrders',
+            'avgOrderValue', 'revenueGrowth', 'ordersGrowth', 'customersGrowth',
+            'topProducts', 'topCustomers', 'lowStockList',
+            'monthlyRevenueData', 'monthlyLabels', 'weekOrdersData',
+            'failedPayments',
         ));
     }
 }

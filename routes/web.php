@@ -32,6 +32,7 @@ Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
         Route::get('/processing', \App\Livewire\Orders\Processing::class)->name('processing');
         Route::get('/shipped', \App\Livewire\Orders\Shipped::class)->name('shipped');
         Route::get('/delivered', \App\Livewire\Orders\Delivered::class)->name('delivered');
+        Route::get('/orders/{id}', \App\Livewire\Orders\OrderDetail::class)->name('orders.detail');
     });
 
 // Products

@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,35 +10,19 @@ use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-   use HasFactory, Notifiable, LogsActivity;
+    use HasFactory, Notifiable, LogsActivity;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -48,23 +30,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole(string $slug): bool
+    {
+        return $this->roles->contains('slug', $slug);
+    }
+
+    // ── Orders relationship ──────────────────────────
+   public function orders()
 {
-    return $this->belongsToMany(Role::class);
-}
-public function hasRole(string $slug): bool
-{
-    return $this->roles->contains('slug', $slug);
-}
-public function getActivitylogOptions(): LogOptions
-{
-    return LogOptions::defaults()
-        ->logOnly(['name', 'email'])
-        ->logOnlyDirty()
-        ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
+    return $this->hasMany(Order::class, 'user_id');
 }
 
-
-
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
+    }
 }
