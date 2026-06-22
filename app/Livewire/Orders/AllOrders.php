@@ -102,6 +102,13 @@ class AllOrders extends Component
         $order->delete();
         session()->flash('message', 'Order deleted successfully!');
     }
+
+//     public function mount()
+// {
+//     if (!auth()->user()->hasPermission('view-orders')) {
+//         abort(403);
+//     }
+// }
     
     public function render()
     {

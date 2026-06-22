@@ -21,6 +21,11 @@ class OrderDetail extends Component
         $this->order->refresh();
         session()->flash('message', 'Status update ho gaya!');
     }
+    public function updatePaymentStatus(string $status): void
+{
+    $this->order->update(['payment_status' => $status]);
+    session()->flash('message', "Payment status '{$status}' ho gaya!");
+}
 
     public function render()
     {

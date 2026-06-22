@@ -19,8 +19,13 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->string('image')->nullable();
             $table->json('gallery')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
+
+            
+// ✅ Yeh karo (foreign key baad mein)
+$table->unsignedBigInteger('category_id')->nullable();
+$table->unsignedBigInteger('brand_id')->nullable();
+            // $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
+            // $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->boolean('featured')->default(false);
             $table->json('attributes')->nullable();

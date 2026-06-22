@@ -501,7 +501,7 @@ canvas {
         <div class="panel">
             <div class="panel-head">
                 <span class="panel-title"><i class="fas fa-fire text-danger me-1"></i> Top Selling Products</span>
-                <a href="#" style="font-size:0.7rem;color:#4f46e5;">View all</a>
+                <a href="{{ route('admin.products.all') }}" style="font-size:0.7rem;color:#4f46e5;">View all</a>
             </div>
             <div class="panel-body">
                 @forelse($topProducts ?? [] as $i => $product)
@@ -529,7 +529,7 @@ canvas {
         <div class="panel">
             <div class="panel-head">
                 <span class="panel-title"><i class="fas fa-crown text-warning me-1"></i> Top Customers</span>
-                <a href="#" style="font-size:0.7rem;color:#4f46e5;">View all</a>
+                <a href="{{ route('admin.customers.all') }}" style="font-size:0.7rem;color:#4f46e5;">View all</a>
             </div>
             <div class="panel-body">
                 @forelse($topCustomers ?? [] as $i => $customer)

@@ -162,21 +162,43 @@
             </div>
 
             <!-- Payment Info -->
-            <div class="card shadow-sm border-0 mb-3">
-                <div class="card-header fw-bold text-white p-3"
-                     style="background: linear-gradient(135deg, #396afc 0%, #2948ff 100%);">
-                    <i class="fas fa-credit-card me-2"></i> Payment Info
-                </div>
-                <div class="card-body">
-                    <p class="mb-1"><strong>Method:</strong> {{ strtoupper($order->payment_method) }}</p>
-                    <p class="mb-0">
-                        <strong>Status:</strong>
-                        <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : 'danger' }}">
-                            {{ ucfirst($order->payment_status) }}
-                        </span>
-                    </p>
-                </div>
-            </div>
+           {{-- ✅ Yeh karo --}}
+<!-- Payment Info -->
+<div class="card shadow-sm border-0 mb-3">
+    <div class="card-header fw-bold text-white p-3"
+         style="background: linear-gradient(135deg, #396afc 0%, #2948ff 100%);">
+        <i class="fas fa-credit-card me-2"></i> Payment Info
+    </div>
+    <div class="card-body">
+        <p class="mb-1"><strong>Method:</strong> {{ strtoupper($order->payment_method) }}</p>
+        <p class="mb-2">
+            <strong>Status:</strong>
+            <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : ($order->payment_status == 'refunded' ? 'warning' : 'danger') }}">
+                {{ ucfirst($order->payment_status) }}
+            </span>
+        </p>
+        <hr>
+        <p class="mb-2 small text-muted fw-semibold">Payment Status Update:</p>
+        <div class="d-grid gap-2">
+            <button wire:click="updatePaymentStatus('paid')"
+                    class="btn btn-success btn-sm">
+                <i class="fas fa-check-circle me-1"></i> Paid Mark Karein
+            </button>
+            <button wire:click="updatePaymentStatus('pending')"
+                    class="btn btn-warning btn-sm text-white">
+                <i class="fas fa-clock me-1"></i> Pending Mark Karein
+            </button>
+            <button wire:click="updatePaymentStatus('refunded')"
+                    class="btn btn-info btn-sm text-white">
+                <i class="fas fa-undo me-1"></i> Refunded Mark Karein
+            </button>
+            <button wire:click="updatePaymentStatus('failed')"
+                    class="btn btn-danger btn-sm">
+                <i class="fas fa-times-circle me-1"></i> Failed Mark Karein
+            </button>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>

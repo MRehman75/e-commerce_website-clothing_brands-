@@ -67,30 +67,35 @@ class Categories extends Component
         $this->dispatch('categoryModalOpened', content: $cat->description ?? ''); // ← Added
     }
 
-    public function save()
-    {
-        $this->validate();
+   public function save()
+{
+    $this->validate();
 
-        $data = [
-            'name'        => $this->name,
-            'slug'        => $this->slug,
-            'description' => $this->description,
-            'parent_id'   => $this->parent_id ?: null,
-            'order'       => $this->order,
-            'status'      => $this->status,
-        ];
+    $data = [
+        'name'        => $this->name,
+        'slug'        => $this->slug,
+        'description' => $this->description,
+        'parent_id'   => $this->parent_id ?: null,
+        'order'       => $this->order,
+        'status'      => $this->status,
+    ];
 
-        if ($this->image) {
-            $data['image'] = $this->image->store('categories', 'public');
-        } else {
-            $data['image'] = $this->existingImage;
-        }
-
-        Category::updateOrCreate(['id' => $this->editingId], $data);
-        $this->showModal = false;
-        $this->resetForm();
-        session()->flash('success', $this->editingId ? 'Category updated.' : 'Category created.');
+    if ($this->image) {
+        $data['image'] = $this->image->store('categories', 'public');
+    } else {
+        $data['image'] = $this->existingImage ?: null;
     }
+
+    if ($this->editingId) {
+        Category::findOrFail($this->editingId)->update($data);
+    } else {
+        Category::create($data);
+    }
+
+    $this->showModal = false;
+    $this->resetForm();
+    session()->flash('success', $this->editingId ? 'Category updated.' : 'Category created.');
+}
 
     public function confirmDelete($id) { $this->confirmingDeleteId = $id; }
 

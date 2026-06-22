@@ -26,14 +26,15 @@ Route::get('/', \App\Livewire\Dashboard::class)->name('dashboard');
 Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
 
     // Orders
-    Route::prefix('orders')->name('orders.')->group(function () {
-        Route::get('/all', \App\Livewire\Orders\AllOrders::class)->name('all');
-        Route::get('/pending', \App\Livewire\Orders\PendingOrders::class)->name('pending');
-        Route::get('/processing', \App\Livewire\Orders\Processing::class)->name('processing');
-        Route::get('/shipped', \App\Livewire\Orders\Shipped::class)->name('shipped');
-        Route::get('/delivered', \App\Livewire\Orders\Delivered::class)->name('delivered');
-        Route::get('/orders/{id}', \App\Livewire\Orders\OrderDetail::class)->name('orders.detail');
-    });
+  Route::prefix('orders')->name('orders.')->group(function () {
+    Route::get('/all',        \App\Livewire\Orders\AllOrders::class)->name('all');
+    Route::get('/pending',    \App\Livewire\Orders\PendingOrders::class)->name('pending');
+    Route::get('/processing', \App\Livewire\Orders\Processing::class)->name('processing');
+    Route::get('/shipped',    \App\Livewire\Orders\Shipped::class)->name('shipped');
+    Route::get('/delivered',  \App\Livewire\Orders\Delivered::class)->name('delivered');
+    Route::get('/{id}',       \App\Livewire\Orders\OrderDetail::class)->name('detail'); // ✅
+});
+
 
 // Products
 Route::prefix('products')->name('products.')->group(function () {
@@ -158,7 +159,16 @@ Route::post('/register', function (Request $request) {
 
 
 
+// Customer Auth Routes
+Route::get('/customer/login',    \App\Livewire\Frontend\CustomerLogin::class)->name('customer.login');
+Route::get('/customer/register', \App\Livewire\Frontend\CustomerRegister::class)->name('customer.register');
 
+Route::post('/customer/logout', function () {
+    Auth::logout();
+    session()->invalidate();
+    session()->regenerateToken();
+    return redirect()->route('products');
+})->name('customer.logout');
 
 
 

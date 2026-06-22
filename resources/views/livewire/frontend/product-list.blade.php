@@ -89,13 +89,39 @@
                             <small class="text-muted mb-1">{{ $product->category->name }}</small>
                             @endif
                             <h6 class="card-title fw-bold mb-1">{{ $product->name }}</h6>
-                            <div class="d-flex align-items-center gap-2 mb-3">
-                                <span class="text-primary fw-bold fs-5">PKR {{ number_format($product->price, 0) }}</span>
-                                @if($product->compare_price && $product->compare_price > $product->price)
-                                <span class="text-muted text-decoration-line-through small">PKR {{ number_format($product->compare_price, 0) }}</span>
-                                <span class="badge bg-danger small">{{ round((($product->compare_price - $product->price) / $product->compare_price) * 100) }}% OFF</span>
-                                @endif
-                            </div>
+                            {{-- ✅ Price section replace karo --}}
+<div class="d-flex align-items-center gap-2 mb-3">
+    @if($activeFlashSale)
+        {{-- Flash Sale price --}}
+        @php
+            $salePrice = $product->price - ($product->price * $activeFlashSale->discount_percentage / 100);
+        @endphp
+        <span class="text-danger fw-bold fs-5">
+            PKR {{ number_format($salePrice, 0) }}
+        </span>
+        <span class="text-muted text-decoration-line-through small">
+            PKR {{ number_format($product->price, 0) }}
+        </span>
+        <span class="badge bg-danger small">
+            ⚡ {{ $activeFlashSale->discount_percentage }}% OFF
+        </span>
+    @elseif($product->compare_price && $product->compare_price > $product->price)
+        {{-- Normal compare price --}}
+        <span class="text-primary fw-bold fs-5">
+            PKR {{ number_format($product->price, 0) }}
+        </span>
+        <span class="text-muted text-decoration-line-through small">
+            PKR {{ number_format($product->compare_price, 0) }}
+        </span>
+        <span class="badge bg-danger small">
+            {{ round((($product->compare_price - $product->price) / $product->compare_price) * 100) }}% OFF
+        </span>
+    @else
+        <span class="text-primary fw-bold fs-5">
+            PKR {{ number_format($product->price, 0) }}
+        </span>
+    @endif
+</div>
                             <small class="text-muted mb-2">Stock: {{ $product->stock > 0 ? $product->stock . ' available' : 'Out of Stock' }}</small>
                             <button wire:click="addToCart({{ $product->id }})" wire:loading.attr="disabled" wire:target="addToCart({{ $product->id }})" @disabled($product->stock < 1) class="btn btn-primary mt-auto w-100">
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})"><i class="fas fa-cart-plus me-2"></i>Cart Mein Add Karein</span>

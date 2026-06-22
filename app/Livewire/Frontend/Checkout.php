@@ -6,11 +6,11 @@ use Livewire\Component;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Coupon;
+use App\Models\Customer;  
 use Illuminate\Support\Str;
 
 class Checkout extends Component
 {
-    // Customer Info
     public string $customer_name    = '';
     public string $customer_email   = '';
     public string $customer_phone   = '';
@@ -18,27 +18,21 @@ class Checkout extends Component
     public string $billing_address  = '';
     public bool   $same_address     = true;
 
-    // Payment
     public string $payment_method = 'cod';
 
-    // Coupon
     public string $coupon_code    = '';
     public float  $discount       = 0;
     public ?array $appliedCoupon  = null;
     public string $coupon_message = '';
     public string $coupon_status  = '';
 
-    // Notes
     public string $notes = '';
-
-    // Cart
-    public array $cart = [];
+    public array  $cart  = [];
 
     public function mount()
     {
         $this->cart = session()->get('cart', []);
 
-        // Auth user ka data prefill karo
         if (auth()->check()) {
             $user = auth()->user();
             $this->customer_name  = $user->name;
@@ -66,9 +60,10 @@ class Checkout extends Component
             return;
         }
 
-        $coupon = Coupon::where('code', strtoupper($this->coupon_code))
-            ->where('is_active', true)
-            ->first();
+      // ✅ Yeh karo - trim bhi add karo
+$coupon = Coupon::where('code', strtoupper(trim($this->coupon_code)))
+    ->where('is_active', true)
+    ->first();
 
         if (!$coupon) {
             $this->coupon_message = 'Coupon nahi mila.';
@@ -94,7 +89,6 @@ class Checkout extends Component
             return;
         }
 
-        // Discount calculate
         if ($coupon->type === 'percentage') {
             $this->discount = ($this->subtotal * $coupon->value) / 100;
             if ($coupon->max_discount) {
@@ -170,25 +164,44 @@ class Checkout extends Component
 
         $this->validate();
 
+        // COD ho to paid, warna pending
+        $isCod          = $this->payment_method === 'cod';
+        $paymentStatus  = $isCod ? 'paid'      : 'pending';
+        $txnStatus      = $isCod ? 'completed' : 'pending';
+
         // Order create karo
         $order = Order::create([
-            'order_number'    => 'ORD-' . strtoupper(Str::random(8)),
-            'user_id'         => auth()->id(),
-            'customer_name'   => $this->customer_name,
-            'customer_email'  => $this->customer_email,
-            'customer_phone'  => $this->customer_phone,
-            'shipping_address'=> $this->shipping_address,
-            'billing_address' => $this->billing_address,
-            'subtotal'        => $this->subtotal,
-            'tax'             => 0,
-            'shipping_cost'   => $this->shipping,
-            'discount'        => $this->discount,
-            'total'           => $this->total,
-            'payment_method'  => $this->payment_method,
-            'payment_status'  => 'pending',
-            'status'          => 'pending',
-            'notes'           => $this->notes,
+            'order_number'     => 'ORD-' . strtoupper(Str::random(8)),
+            'user_id'          => auth()->id(),
+            'customer_name'    => $this->customer_name,
+            'customer_email'   => $this->customer_email,
+            'customer_phone'   => $this->customer_phone,
+            'shipping_address' => $this->shipping_address,
+            'billing_address'  => $this->billing_address,
+            'subtotal'         => $this->subtotal,
+            'tax'              => 0,
+            'shipping_cost'    => $this->shipping,
+            'discount'         => $this->discount,
+            'total'            => $this->total,
+            'payment_method'   => $this->payment_method,
+            'payment_status'   => $paymentStatus,  // ✅ COD = paid
+            'status'           => 'pending',
+            'notes'            => $this->notes,
         ]);
+        // ✅ NAYA CODE — Customer stats update
+$customer = Customer::firstOrCreate(
+    ['email' => $this->customer_email],
+    [
+        'name'    => $this->customer_name,
+        'phone'   => $this->customer_phone,
+        'address' => $this->shipping_address,
+        'status'  => 'active',
+    ]
+);
+
+$customer->increment('total_orders');
+$customer->increment('total_spent', $this->total);
+$customer->update(['last_order_at' => now()]);
 
         // Order items save karo
         foreach ($this->cart as $item) {
@@ -203,6 +216,18 @@ class Checkout extends Component
             ]);
         }
 
+        // Transaction create karo
+        \App\Models\Transaction::create([
+            'transaction_id' => 'TXN-' . strtoupper(Str::random(8)),
+            'order_id'       => $order->id,
+            'user_id'        => auth()->id(),
+            'amount'         => $this->total,
+            'payment_method' => $this->payment_method,
+            'status'         => $txnStatus,  // ✅ COD = completed
+            'currency'       => 'PKR',
+            'notes'          => $this->notes,
+        ]);
+
         // Coupon use count update
         if ($this->appliedCoupon) {
             Coupon::find($this->appliedCoupon['id'])?->increment('used_count');
@@ -211,7 +236,6 @@ class Checkout extends Component
         // Cart clear karo
         session()->forget('cart');
 
-        // Order confirm page pe redirect
         return $this->redirect(route('order.success', $order->order_number), navigate: true);
     }
 

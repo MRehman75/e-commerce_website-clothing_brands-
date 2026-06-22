@@ -149,7 +149,7 @@
                         @forelse($orders as $order)
                             <tr>
                                 <td>#{{ $order->id }}</td>
-                                <td>{{ $order->user?->name ?? 'Guest' }}</td>
+                               <td>{{ $order->customer_name ?? $order->user?->name ?? 'Guest' }}</td>
                                 <td>
                                     <select wire:change="updateStatus({{ $order->id }}, $event.target.value)" 
                                             class="form-control form-control-sm">
@@ -160,7 +160,7 @@
                                         <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                     </select>
                                 </td>
-                                <td>${{ number_format($order->total_amount ?? 0, 2) }}</td>
+                               <td>Rs. {{ number_format($order->total ?? 0, 2) }}</td>
                                 <td>{{ $order->created_at->format('M d, Y') }}</td>
                                 <td>
                                     <button wire:click="deleteOrder({{ $order->id }})" 

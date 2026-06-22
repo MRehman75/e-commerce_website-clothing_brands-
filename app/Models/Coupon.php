@@ -31,7 +31,14 @@ class Coupon extends Model
         'min_order_amount' => 'decimal:2',
         'max_discount' => 'decimal:2',
     ];
+// Coupon.php model mein add karo
 
+protected static function booted(): void
+{
+    static::saving(function ($coupon) {
+        $coupon->code = strtoupper(trim($coupon->code));
+    });
+}
     public function getStatusAttribute(): string
     {
         if (!$this->is_active) return 'inactive';

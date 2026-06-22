@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\FlashSale;
 
 class ProductList extends Component
 {
@@ -50,6 +51,17 @@ class ProductList extends Component
 
         $cart = session()->get('cart', []);
 
+        // ✅ Active flash sale check karo
+        $flashSale = FlashSale::where('is_active', true)
+            ->where('start_time', '<=', now())
+            ->where('end_time', '>=', now())
+            ->first();
+
+        $finalPrice = (float) $product->price;
+        if ($flashSale) {
+          $finalPrice = $finalPrice - ($finalPrice * $flashSale->discount_percentage / 100);
+        }
+
         if (isset($cart[$productId])) {
             if ($cart[$productId]['quantity'] >= $product->stock) {
                 $this->dispatch('notify', type: 'error', message: 'Stock mein itni quantity nahi!');
@@ -62,9 +74,9 @@ class ProductList extends Component
                 'product_id' => $product->id,
                 'name'       => $product->name,
                 'sku'        => $product->sku,
-                'price'      => (float) $product->price,
+                'price'      => $finalPrice,
                 'quantity'   => 1,
-                'total'      => (float) $product->price,
+                'total'      => $finalPrice,
                 'image'      => $product->image,
             ];
         }
@@ -96,7 +108,13 @@ class ProductList extends Component
         $categories = Category::orderBy('name')->get();
         $brands     = Brand::orderBy('name')->get();
 
-        return view('livewire.frontend.product-list', compact('products', 'categories', 'brands'))
+        // ✅ Active flash sale lao
+        $activeFlashSale = FlashSale::where('is_active', true)
+            ->where('start_time', '<=', now())
+            ->where('end_time', '>=', now())
+            ->first();
+
+        return view('livewire.frontend.product-list', compact('products', 'categories', 'brands', 'activeFlashSale'))
             ->layout('layouts.frontend');
     }
 }

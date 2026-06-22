@@ -71,9 +71,11 @@
                                 <td>{{ $order->created_at->format('d M Y') }}</td>
                                <td>
     <div class="btn-group">
-        <a href="#" class="btn btn-sm btn-info text-white" title="View">
-            <i class="fas fa-eye"></i>
-        </a>
+        <a href="{{ route('admin.orders.detail', $order->id) }}" 
+   wire:navigate
+   class="btn btn-sm btn-info text-white" title="View">
+    <i class="fas fa-eye"></i>
+</a>
         <button wire:click="deleteOrder({{ $order->id }})"
                 class="btn btn-sm btn-danger" title="Delete"
                 onclick="return confirm('Delete karna chahte ho?')">

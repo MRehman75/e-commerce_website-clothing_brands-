@@ -44,4 +44,9 @@ class Transaction extends Model
             default => 'secondary',
         };
     }
+    // Transaction.php mein
+public function getCustomerNameAttribute(): string
+{
+    return $this->order?->customer_name ?? $this->user?->name ?? 'N/A';
+}
 }

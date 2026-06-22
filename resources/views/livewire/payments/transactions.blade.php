@@ -131,10 +131,18 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td><strong>{{ $transaction->transaction_id }}</strong></td>
-                                <td>{{ $transaction->user?->name ?? 'N/A' }}</td>
+                                <td>{{ $transaction->order?->customer_name ?? $transaction->user?->name ?? 'N/A' }}</td>
                                 <td>#{{ $transaction->order?->order_number ?? 'N/A' }}</td>
-                                <td><strong>${{ number_format($transaction->amount, 2) }}</strong></td>
-                                <td>{{ ucfirst($transaction->payment_method) }}</td>
+                                <td><strong>Rs.{{ number_format($transaction->amount, 2) }}</strong></td>
+                                <td>
+    {{ match($transaction->payment_method) {
+        'cod' => 'Cash on Delivery',
+        'bank_transfer' => 'Bank Transfer',
+        'jazzcash' => 'JazzCash',
+        'easypaisa' => 'EasyPaisa',
+        default => ucfirst($transaction->payment_method)
+    } }}
+</td>
                                 <td>
                                     <span class="badge bg-{{ $transaction->status_color }}">
                                         {{ ucfirst($transaction->status) }}

@@ -73,9 +73,11 @@
                                 <td>{{ $order->created_at->format('d M Y') }}</td>
                                <td>
     <div class="btn-group">
-        <a href="#" class="btn btn-sm btn-info text-white" title="View">
-            <i class="fas fa-eye"></i>
-        </a>
+        <a href="{{ route('admin.orders.detail', $order->id) }}" 
+   wire:navigate
+   class="btn btn-sm btn-info text-white" title="View">
+    <i class="fas fa-eye"></i>
+</a>
         <button wire:click="updateStatus({{ $order->id }}, 'processing')"
                 class="btn btn-sm btn-warning text-white" title="Mark Processing">
             <i class="fas fa-spinner"></i>
