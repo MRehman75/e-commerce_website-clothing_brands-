@@ -47,6 +47,10 @@ class GeneralSettings extends Component
     // ────────────────────────────────────────
     public function mount()
     {
+        // ✅ Permission check sabse upar add karo
+    // if (!auth()->user()->hasPermission('view-settings')) {
+    //     abort(403);
+    // }
         $s = GeneralSetting::instance();
 
         // Site
@@ -237,6 +241,7 @@ class GeneralSettings extends Component
             session()->flash('error', 'Failed: ' . $e->getMessage());
         }
     }
+   
 
     public function render()
     {

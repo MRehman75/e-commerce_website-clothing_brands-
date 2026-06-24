@@ -2,24 +2,32 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Menu;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
+    public function register()
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
+    public function boot()
     {
-        //
+        View::composer('layouts.frontend', function ($view) {
+            $headerMenu = Menu::with(['items' => function($q) {
+                $q->where('is_active', 1)
+                  ->orderBy('sort_order')
+                  ->with(['children' => function($q) {
+                      $q->where('is_active', 1)->orderBy('sort_order');
+                  }]);
+            }])
+            ->where('location', 'header')
+            ->where('is_active', 1)
+            ->first();
+
+            $view->with('headerMenu', $headerMenu);
+        });
     }
-    
 }

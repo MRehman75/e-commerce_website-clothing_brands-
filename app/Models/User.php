@@ -57,23 +57,15 @@ class User extends Authenticatable
 
 
     // app/Models/User.php mein add karo
+public function hasPermission(string $slug): bool
+{
+    foreach ($this->roles as $role) {
+        if ($role->permissions->contains('slug', $slug)) {
+            return true;
+        }
+    }
+    return false;
+}
 
-// public function hasPermission(string $slug): bool
-// {
-//     // Super Admin ko sab permission mile (agar role "super-admin" hai)
-//     foreach ($this->roles as $role) {
-//         if ($role->slug === 'super-admin') {
-//             return true;
-//         }
-//         if ($role->permissions->contains('slug', $slug)) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
 
-// public function hasRole(string $slug): bool
-// {
-//     return $this->roles->contains('slug', $slug);
-// }
 }

@@ -75,12 +75,19 @@
                         <tr>
                             <td>{{ $log->id }}</td>
                             <td>
-                                @if($log->user)
+                                @if($log->causer)
+<strong>{{ $log->causer->name }}</strong><br>
+<small class="text-muted">{{ explode(' ', $log->causer->email)[0] }}</small>
+<!-- <small class="text-muted">{{ $log->causer->email }}</small> -->
+@else
+<span class="text-muted">System</span>
+@endif
+                               <!--  @if($log->user)
                                 <strong>{{ $log->user->name }}</strong><br>
                                 <small class="text-muted">{{ $log->user->email }}</small>
                                 @else
                                 <span class="text-muted">System</span>
-                                @endif
+                                @endif -->
                             </td>
                             <td>
                                 <span class="badge bg-{{
@@ -91,7 +98,8 @@
                                     {{ ucfirst($log->action) }}
                                 </span>
                             </td>
-                            <td>{{ $log->description }}</td>
+                            <td>{{ str_replace('System --> ', '', $log->description) }}</td>
+                            <!-- <td>{{ $log->description }}</td> -->
                             <td><small>{{ $log->ip_address ?? 'N/A' }}</small></td>
                             <td><small>{{ $log->created_at->format('d M Y H:i') }}</small></td>
                         </tr>

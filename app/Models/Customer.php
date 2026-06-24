@@ -35,4 +35,5 @@ class Customer extends Model
             default    => 'secondary',
         };
     }
+   
 }

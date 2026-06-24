@@ -77,6 +77,7 @@ class AllCustomers extends Component
 
     public function save()
     {
+        
         $rules = $this->rules;
 
         // Unique email — ignore self on edit
@@ -98,6 +99,8 @@ class AllCustomers extends Component
                 'status'  => $this->status,
             ]
         );
+
+
 
         $this->showModal = false;
         $this->resetForm();

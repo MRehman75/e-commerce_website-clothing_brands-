@@ -44,7 +44,12 @@ class ProductReport extends Component
     {
         return Brand::orderBy('name')->get();
     }
-
+// public function mount()
+// {
+//     if (!auth()->user()->hasPermission('view-reports')) {
+//         abort(403);
+//     }
+// }
     public function render()
     {
         return view('livewire.reports.product-report', [

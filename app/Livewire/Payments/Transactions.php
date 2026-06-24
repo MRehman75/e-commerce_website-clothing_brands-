@@ -28,7 +28,12 @@ class Transactions extends Component
         $this->dateTo = '';
         $this->resetPage();
     }
-
+// public function mount()
+// {
+//     if (!auth()->user()->hasPermission('view-payments')) {
+//         abort(403);
+//     }
+// }
     public function render()
     {
         $transactions = Transaction::with(['order', 'user'])

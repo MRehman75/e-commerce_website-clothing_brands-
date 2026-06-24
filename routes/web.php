@@ -10,6 +10,18 @@ use App\Http\Controllers\Admin\DashboardController;
 Route::get('/products', \App\Livewire\Frontend\ProductList::class)->name('products');
 Route::get('/cart',     \App\Livewire\Frontend\CartPage::class)->name('cart');
 Route::get('/checkout', \App\Livewire\Frontend\Checkout::class)->name('checkout');
+
+// ✅ Blog routes — /{slug} se PEHLE add karo
+Route::get('/blog', \App\Livewire\Frontend\BlogList::class)->name('blog.index');
+Route::get('/blog/{slug}', \App\Livewire\Frontend\BlogDetail::class)->name('blog.show');
+
+
+Route::get('/{slug}', function($slug) {
+    $page = \App\Models\Page::where('slug', $slug)
+                ->where('is_active', true)
+                ->firstOrFail();
+    return view('frontend.page', compact('page'));
+});
  
 // Order Success Page
 Route::get('/order/success/{orderNumber}', function ($orderNumber) {

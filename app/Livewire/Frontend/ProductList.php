@@ -7,7 +7,9 @@ use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\HomeSlider;
 use App\Models\FlashSale;
+use App\Models\Banner;
 
 class ProductList extends Component
 {
@@ -87,34 +89,69 @@ class ProductList extends Component
         $this->dispatch('notify', type: 'success', message: "{$product->name} cart mein add ho gaya!");
     }
 
-    public function render()
-    {
-        $products = Product::query()
-            ->where('status', 'active')
-            ->when($this->search, fn($q) =>
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%')
-            )
-            ->when($this->category, fn($q) =>
-                $q->whereHas('category', fn($q) => $q->where('slug', $this->category))
-            )
-            ->when($this->brand, fn($q) =>
-                $q->whereHas('brand', fn($q) => $q->where('slug', $this->brand))
-            )
-            ->whereBetween('price', [$this->minPrice, $this->maxPrice])
-            ->orderBy($this->sortBy, $this->sortOrder)
-            ->paginate($this->perPage);
+  public function render()
+{
+    $products = Product::query()
+        ->where('status', 'active')
+        ->when($this->search, fn($q) =>
+            $q->where('name', 'like', '%' . $this->search . '%')
+              ->orWhere('description', 'like', '%' . $this->search . '%')
+        )
+        ->when($this->category, fn($q) =>
+            $q->whereHas('category', fn($q) => $q->where('slug', $this->category))
+        )
+        ->when($this->brand, fn($q) =>
+            $q->whereHas('brand', fn($q) => $q->where('slug', $this->brand))
+        )
+        ->whereBetween('price', [$this->minPrice, $this->maxPrice])
+        ->orderBy($this->sortBy, $this->sortOrder)
+        ->paginate($this->perPage);
 
-        $categories = Category::orderBy('name')->get();
-        $brands     = Brand::orderBy('name')->get();
+    $categories = Category::orderBy('name')->get();
+    $brands     = Brand::orderBy('name')->get();
 
-        // ✅ Active flash sale lao
-        $activeFlashSale = FlashSale::where('is_active', true)
-            ->where('start_time', '<=', now())
-            ->where('end_time', '>=', now())
-            ->first();
+    $activeFlashSale = FlashSale::where('is_active', true)
+        ->where('start_time', '<=', now())
+        ->where('end_time', '>=', now())
+        ->first();
 
-        return view('livewire.frontend.product-list', compact('products', 'categories', 'brands', 'activeFlashSale'))
-            ->layout('layouts.frontend');
-    }
+    $sliders = HomeSlider::where('is_active', true)->orderBy('sort_order')->get();
+
+  
+
+// render() mein add karo
+$sidebarBanner = Banner::where('position', 'sidebar')
+    ->where('is_active', true)
+    ->where(function($q) {
+        $q->whereNull('starts_at')
+          ->orWhere('starts_at', '<=', now());
+    })
+    ->where(function($q) {
+        $q->whereNull('ends_at')
+          ->orWhere('ends_at', '>=', now());
+    })
+    ->orderBy('sort_order')
+    ->first();
+$getBanner = fn($pos) => \App\Models\Banner::active()
+    ->forPosition($pos)
+    ->first();
+    
+        // ── Banners ──────────────────────────────
+
+$getBanner = fn($pos) => Banner::active()->forPosition($pos)->first();
+
+$sidebarBanner        = $getBanner('sidebar');
+$homepageTopBanner    = $getBanner('homepage_top');
+$homepageMiddleBanner = $getBanner('homepage_middle');
+$homepageBottomBanner = $getBanner('homepage_bottom');
+$categoryTopBanner    = $getBanner('category_top');
+$popupBanner          = $getBanner('popup');
+
+return view('livewire.frontend.product-list', compact(
+    'products', 'categories', 'brands', 'activeFlashSale',
+    'sliders', 'sidebarBanner', 'homepageTopBanner',
+    'homepageMiddleBanner', 'homepageBottomBanner',
+    'categoryTopBanner', 'popupBanner'
+))->layout('layouts.frontend');
+}
 }

@@ -20,4 +20,10 @@ class ActivityLog extends Model
     {
         return $this->belongsTo(User::class);
     }
+    // App\Models\ActivityLog.php  (ya jis model se log fetch ho raha hai)
+
+public function causer()
+{
+    return $this->morphTo(__FUNCTION__, 'causer_type', 'causer_id');
+}
 }

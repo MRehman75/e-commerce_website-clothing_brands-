@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Livewire\UserManagement;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\WithPagination;
-use App\Models\ActivityLog;
+use Spatie\Activitylog\Models\Activity;
 use App\Models\User;
 
 #[Layout('layouts.admin')]
@@ -19,22 +20,22 @@ class UserActivityLog extends Component
 
     public function render()
     {
-        $query = ActivityLog::with('user')
+        $query = Activity::with('causer')
             ->when($this->search, fn($q) => $q->where('description', 'like', "%{$this->search}%"))
-            ->when($this->filterUser, fn($q) => $q->where('user_id', $this->filterUser))
-            ->when($this->filterAction, fn($q) => $q->where('action', $this->filterAction))
+            ->when($this->filterUser, fn($q) => $q->where('causer_id', $this->filterUser))
+            ->when($this->filterAction, fn($q) => $q->where('event', $this->filterAction))
             ->latest();
 
         return view('livewire.user-management.user-activity-log', [
             'logs' => $query->paginate($this->perPage),
             'users' => User::orderBy('name')->get(),
-            'actions' => ActivityLog::distinct()->pluck('action'),
+            'actions' => Activity::distinct()->pluck('event'),
         ]);
     }
 
     public function clearLogs()
     {
-        ActivityLog::truncate();
+        Activity::truncate();
         session()->flash('success', 'All logs cleared!');
     }
 }

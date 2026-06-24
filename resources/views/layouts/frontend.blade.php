@@ -6,22 +6,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Ecommerce Store')</title>
 
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     @livewireStyles
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f5; font-size: 0.88rem; }
 
-        body {
-            background: #f0f2f5;
-            font-size: 0.88rem;
-        }
-
-        /* ── Navbar ── */
         .frontend-navbar {
             background: #1a252f;
             padding: 12px 0;
@@ -30,161 +23,85 @@
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-
         .frontend-navbar .brand {
-            color: white;
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-decoration: none;
+            color: white; font-size: 1.3rem; font-weight: 700; text-decoration: none;
         }
-
-        .frontend-navbar .brand i {
-            color: #0d6efd;
-        }
-
+        .frontend-navbar .brand i { color: #0d6efd; }
         .frontend-navbar .nav-link {
-            color: #cbd5e0 !important;
-            font-size: 0.85rem;
-            padding: 6px 12px !important;
-            transition: color 0.2s;
+            color: #cbd5e0 !important; font-size: 0.85rem;
+            padding: 6px 12px !important; transition: color 0.2s;
         }
+        .frontend-navbar .nav-link:hover { color: white !important; }
+        .frontend-navbar .nav-link.active { color: #0d6efd !important; }
 
-        .frontend-navbar .nav-link:hover {
-            color: white !important;
-        }
-
-        .frontend-navbar .nav-link.active {
-            color: #0d6efd !important;
-        }
-
-        /* Cart Icon */
-        .cart-btn {
-            position: relative;
-            color: white;
-            background: #0d6efd;
+        /* ── Dynamic Menu ── */
+        .frontend-navbar .dropdown-menu {
+            background: #243342;
             border: none;
-            padding: 8px 16px;
             border-radius: 8px;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            min-width: 180px;
         }
-
-        .cart-btn:hover {
-            background: #0b5ed7;
+        .frontend-navbar .dropdown-item {
+            color: #cbd5e0;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+        }
+        .frontend-navbar .dropdown-item:hover {
+            background: #2d3e4f;
             color: white;
         }
 
+        .cart-btn {
+            position: relative; color: white; background: #0d6efd;
+            border: none; padding: 8px 16px; border-radius: 8px;
+            font-size: 0.85rem; text-decoration: none; transition: background 0.2s;
+        }
+        .cart-btn:hover { background: #0b5ed7; color: white; }
         .cart-badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: #dc3545;
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 0.65rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            position: absolute; top: -6px; right: -6px;
+            background: #dc3545; color: white; border-radius: 50%;
+            width: 18px; height: 18px; font-size: 0.65rem;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
-
-        /* Search Bar */
         .search-bar input {
-            border: none;
-            border-radius: 8px 0 0 8px;
-            font-size: 0.85rem;
-            padding: 8px 14px;
+            border: none; border-radius: 8px 0 0 8px;
+            font-size: 0.85rem; padding: 8px 14px;
         }
-
         .search-bar button {
-            border-radius: 0 8px 8px 0;
-            background: #0d6efd;
-            border: none;
-            color: white;
-            padding: 8px 14px;
+            border-radius: 0 8px 8px 0; background: #0d6efd;
+            border: none; color: white; padding: 8px 14px;
         }
-
-        /* Top Announcement Bar */
         .announcement-bar {
-            background: #0d6efd;
-            color: white;
-            text-align: center;
-            padding: 6px;
-            font-size: 0.78rem;
+            background: #0d6efd; color: white;
+            text-align: center; padding: 6px; font-size: 0.78rem;
         }
-
-        /* Product Card Hover */
         .product-card {
             transition: transform 0.2s, box-shadow 0.2s;
-            border-radius: 12px !important;
-            overflow: hidden;
+            border-radius: 12px !important; overflow: hidden;
         }
-
         .product-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
         }
-
-        .product-card img {
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Footer */
+        .product-card img { transition: transform 0.3s; }
+        .product-card:hover img { transform: scale(1.05); }
         .frontend-footer {
-            background: #1a252f;
-            color: #cbd5e0;
-            padding: 40px 0 20px;
-            margin-top: 60px;
+            background: #1a252f; color: #cbd5e0;
+            padding: 40px 0 20px; margin-top: 60px;
         }
-
-        .frontend-footer h6 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
+        .frontend-footer h6 { color: white; font-weight: 600; margin-bottom: 15px; }
         .frontend-footer a {
-            color: #a0b3c4;
-            text-decoration: none;
-            font-size: 0.82rem;
-            display: block;
-            margin-bottom: 6px;
-            transition: color 0.2s;
+            color: #a0b3c4; text-decoration: none; font-size: 0.82rem;
+            display: block; margin-bottom: 6px; transition: color 0.2s;
         }
-
-        .frontend-footer a:hover {
-            color: white;
-        }
-
+        .frontend-footer a:hover { color: white; }
         .frontend-footer .footer-bottom {
-            border-top: 1px solid #2d3e4f;
-            padding-top: 15px;
-            margin-top: 30px;
-            font-size: 0.78rem;
-            color: #6b8096;
+            border-top: 1px solid #2d3e4f; padding-top: 15px;
+            margin-top: 30px; font-size: 0.78rem; color: #6b8096;
         }
-
-        /* Breadcrumb */
-        .page-breadcrumb {
-            background: white;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 0.82rem;
-        }
-
-        /* Toast */
         .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
+            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
         }
     </style>
 
@@ -200,6 +117,19 @@
 </div>
 
 {{-- Navbar --}}
+@php
+    $headerMenu = \App\Models\Menu::where('location', 'header')
+        ->with(['items' => function($q) {
+            $q->where('is_active', true)
+              ->whereNull('parent_id')
+              ->orderBy('sort_order')
+              ->with(['children' => function($q) {
+                  $q->where('is_active', true)->orderBy('sort_order');
+              }]);
+        }])
+        ->first();
+@endphp
+
 <nav class="frontend-navbar">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between gap-3">
@@ -216,11 +146,54 @@
             </div>
 
             {{-- Nav Links --}}
-            <div class="d-none d-md-flex align-items-center gap-2">
+            <div class="d-none d-md-flex align-items-center gap-1">
+
+                {{-- Dynamic Menu Items --}}
+                @if($headerMenu && $headerMenu->items->count() > 0)
+                    @foreach($headerMenu->items as $item)
+                        @if($item->children->count() > 0)
+                        {{-- Dropdown --}}
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="{{ $item->url ?? '#' }}"
+                               data-bs-toggle="dropdown">
+                                @if($item->icon)
+                                <i class="{{ $item->icon }} me-1"></i>
+                                @endif
+                                {{ $item->label }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach($item->children as $child)
+                                <li>
+                                    <a class="dropdown-item" href="{{ $child->url ?? '#' }}"
+                                       {{ $child->open_in_new_tab ? 'target=_blank' : '' }}>
+                                        @if($child->icon)
+                                        <i class="{{ $child->icon }} me-1"></i>
+                                        @endif
+                                        {{ $child->label }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @else
+                        {{-- Simple Link --}}
+                        <a href="{{ $item->url ?? '#' }}"
+                           class="nav-link {{ request()->url() === url($item->url) ? 'active' : '' }}"
+                           {{ $item->open_in_new_tab ? 'target=_blank' : '' }}>
+                            @if($item->icon)
+                            <i class="{{ $item->icon }} me-1"></i>
+                            @endif
+                            {{ $item->label }}
+                        </a>
+                        @endif
+                    @endforeach
+                @else
+                {{-- Default Link --}}
                 <a href="{{ route('products') }}"
                    class="nav-link {{ request()->routeIs('products') ? 'active' : '' }}">
                     <i class="fas fa-shopping-bag me-1"></i>Products
                 </a>
+                @endif
 
                 @auth
                 <div class="dropdown">
@@ -250,17 +223,12 @@
                 @endauth
 
                 {{-- Cart --}}
+                @php $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity')); @endphp
                 <a href="{{ route('cart') }}" class="cart-btn ms-1">
-                    <i class="fas fa-shopping-cart"></i>
-                    Cart
-                    @php
-                        $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity'));
-                    @endphp
-                    @if($cartCount > 0)
-                    <span class="cart-badge" id="cart-count">{{ $cartCount }}</span>
-                    @else
-                    <span class="cart-badge d-none" id="cart-count">0</span>
-                    @endif
+                    <i class="fas fa-shopping-cart"></i> Cart
+                    <span class="cart-badge {{ $cartCount == 0 ? 'd-none' : '' }}" id="cart-count">
+                        {{ $cartCount }}
+                    </span>
                 </a>
             </div>
 
@@ -281,8 +249,8 @@
 
 {{-- Main Content --}}
 <main>
-  {{ $slot ?? '' }}
-@yield('content')
+    {{ $slot ?? '' }}
+    @yield('content')
 </main>
 
 {{-- Footer --}}
@@ -326,7 +294,7 @@
     </div>
 </footer>
 
-{{-- Toast Notifications --}}
+{{-- Toast --}}
 <div class="toast-container">
     <div id="liveToast" class="toast align-items-center text-white border-0" role="alert">
         <div class="d-flex">
@@ -337,22 +305,15 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-    // Cart update event
     document.addEventListener('livewire:init', () => {
         Livewire.on('cartUpdated', (event) => {
             const count = event.count;
             const badge  = document.getElementById('cart-count');
             const badge2 = document.getElementById('cart-count-mobile');
-
-            if (badge) {
-                badge.textContent = count;
-                badge.classList.toggle('d-none', count === 0);
-            }
+            if (badge) { badge.textContent = count; badge.classList.toggle('d-none', count === 0); }
             if (badge2) badge2.textContent = count;
         });
-
         Livewire.on('notify', (event) => {
             const toast    = document.getElementById('liveToast');
             const toastMsg = document.getElementById('toastMsg');
