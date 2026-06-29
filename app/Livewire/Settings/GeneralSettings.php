@@ -221,6 +221,7 @@ class GeneralSettings extends Component
 
         try {
             config([
+                'mail.default'                 => 'smtp',   // ✅ YE LINE ADD KARNI HAI
                 'mail.mailers.smtp.host'       => $this->mail_host,
                 'mail.mailers.smtp.port'       => $this->mail_port,
                 'mail.mailers.smtp.username'   => $this->mail_username,

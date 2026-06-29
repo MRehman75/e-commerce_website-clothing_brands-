@@ -254,43 +254,158 @@
 </main>
 
 {{-- Footer --}}
+@php
+    $footer = \App\Models\FooterSetting::instance();
+    $footerColumns = \App\Models\FooterColumn::where('is_active', true)
+        ->orderBy('sort_order')
+        ->with(['links' => function($q) {
+            $q->where('is_active', true)->orderBy('sort_order');
+        }])
+        ->get();
+@endphp
+
 <footer class="frontend-footer">
     <div class="container">
+
+        {{-- Newsletter Section --}}
+        @if($footer->show_newsletter)
+        <div class="row mb-4 pb-4" style="border-bottom:1px solid #2d3e4f;">
+            <div class="col-md-6">
+                <h6 class="mb-1">{{ $footer->newsletter_title ?: 'Subscribe to our Newsletter' }}</h6>
+                <p class="small mb-0" style="color:#a0b3c4;">{{ $footer->newsletter_subtitle ?: 'Get the latest deals and offers.' }}</p>
+            </div>
+            <div class="col-md-6">
+                <form class="d-flex gap-2">
+                    <input type="email" class="form-control" placeholder="Aap ka email address..." required>
+                    <button type="submit" class="btn btn-primary px-4">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        @endif
+
         <div class="row g-4">
+            {{-- Company Info Column --}}
             <div class="col-md-4">
-                <h6><i class="fas fa-store me-2"></i>MyShop</h6>
-                <p class="small" style="color:#a0b3c4;">
-                    Pakistan ka best online store. Quality products at best prices.
-                </p>
+                <h6>
+                    @if($footer->logo)
+                        <img src="{{ asset('storage/' . $footer->logo) }}" alt="{{ $footer->company_name }}" style="height:28px;object-fit:contain" class="me-2">
+                    @else
+                        <i class="fas fa-store me-2"></i>
+                    @endif
+                    {{ $footer->company_name }}
+                </h6>
+                @if($footer->about_text)
+                <div class="small" style="color:#a0b3c4;">
+                    {!! $footer->about_text !!}
+                </div>
+                @endif
+
+                {{-- Social Links --}}
                 <div class="d-flex gap-3 mt-3">
-                    <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
-                    <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    @if($footer->facebook)
+                        <a href="{{ $footer->facebook }}" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+                    @endif
+                    @if($footer->instagram)
+                        <a href="{{ $footer->instagram }}" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+                    @endif
+                    @if($footer->twitter)
+                        <a href="{{ $footer->twitter }}" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
+                    @endif
+                    @if($footer->youtube)
+                        <a href="{{ $footer->youtube }}" target="_blank"><i class="fab fa-youtube fa-lg"></i></a>
+                    @endif
+                    @if($footer->tiktok)
+                        <a href="{{ $footer->tiktok }}" target="_blank"><i class="fab fa-tiktok fa-lg"></i></a>
+                    @endif
+                    @if($footer->whatsapp)
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $footer->whatsapp) }}" target="_blank"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    @endif
                 </div>
             </div>
+
+            {{-- Dynamic Columns (from admin "Columns & Links") --}}
+            @foreach($footerColumns as $col)
             <div class="col-md-2">
-                <h6>Quick Links</h6>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('cart') }}">Cart</a>
-                <a href="{{ route('checkout') }}">Checkout</a>
+                <h6>{{ $col->title }}</h6>
+                @foreach($col->links as $link)
+                    <a href="{{ $link->url }}" {{ $link->open_in_new_tab ? 'target=_blank' : '' }}>
+                        {{ $link->label }}
+                    </a>
+                @endforeach
             </div>
-            <div class="col-md-3">
-                <h6>Customer Service</h6>
-                <a href="#">Track Order</a>
-                <a href="#">Return Policy</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Contact Us</a>
-            </div>
+            @endforeach
+
+            {{-- Contact Column --}}
+            @if($footer->email || $footer->phone || $footer->address)
             <div class="col-md-3">
                 <h6>Contact</h6>
-                <p class="small mb-1"><i class="fas fa-phone me-2"></i>0300-1234567</p>
-                <p class="small mb-1"><i class="fas fa-envelope me-2"></i>info@myshop.pk</p>
-                <p class="small"><i class="fas fa-map-marker-alt me-2"></i>Lahore, Pakistan</p>
+                @if($footer->phone)
+                <p class="small mb-1"><i class="fas fa-phone me-2"></i>{{ $footer->phone }}</p>
+                @endif
+                @if($footer->email)
+                <p class="small mb-1"><i class="fas fa-envelope me-2"></i>{{ $footer->email }}</p>
+                @endif
+                @if($footer->address)
+                <p class="small"><i class="fas fa-map-marker-alt me-2"></i>{{ $footer->address }}</p>
+                @endif
             </div>
+            @endif
         </div>
+
+        {{-- App Links + Payment Methods --}}
+        @if($footer->playstore_link || $footer->appstore_link || !empty($footer->payment_methods))
+        <div class="row align-items-center pt-4 mt-2" style="border-top:1px solid #2d3e4f;">
+            {{-- App Store Links --}}
+            @if($footer->playstore_link || $footer->appstore_link)
+            <div class="col-md-6 mb-3 mb-md-0">
+                <h6 class="mb-2" style="font-size:0.85rem;">Hamari App Download Karein</h6>
+                <div class="d-flex gap-2">
+                    @if($footer->playstore_link)
+                    <a href="{{ $footer->playstore_link }}" target="_blank" class="btn btn-sm btn-outline-light">
+                        <i class="fab fa-google-play me-1"></i> Google Play
+                    </a>
+                    @endif
+                    @if($footer->appstore_link)
+                    <a href="{{ $footer->appstore_link }}" target="_blank" class="btn btn-sm btn-outline-light">
+                        <i class="fab fa-apple me-1"></i> App Store
+                    </a>
+                    @endif
+                </div>
+            </div>
+            @endif
+
+            {{-- Payment Method Icons --}}
+            @if(!empty($footer->payment_methods))
+            <div class="col-md-6 text-md-end">
+                <h6 class="mb-2" style="font-size:0.85rem;">We Accept</h6>
+                <div class="d-flex gap-3 justify-content-md-end">
+                    @foreach($footer->payment_methods as $method)
+                        @if($method === 'visa')
+                            <i class="fab fa-cc-visa fa-2x" style="color:#1a1f71;"></i>
+                        @elseif($method === 'mastercard')
+                            <i class="fab fa-cc-mastercard fa-2x" style="color:#eb001b;"></i>
+                        @elseif($method === 'easypaisa')
+                            <i class="fas fa-mobile-alt fa-2x text-success" title="EasyPaisa"></i>
+                        @elseif($method === 'jazzcash')
+                            <i class="fas fa-wallet fa-2x text-warning" title="JazzCash"></i>
+                        @elseif($method === 'cod')
+                            <i class="fas fa-money-bill fa-2x text-success" title="Cash on Delivery"></i>
+                        @elseif($method === 'bank')
+                            <i class="fas fa-university fa-2x text-info" title="Bank Transfer"></i>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            @endif
+        </div>
+        @endif
+
+        {{-- Bottom Bar --}}
+        @if($footer->show_bottom_bar)
         <div class="footer-bottom text-center">
-            © {{ date('Y') }} MyShop. All rights reserved.
+            {{ $footer->copyright_text }}
         </div>
+        @endif
     </div>
 </footer>
 

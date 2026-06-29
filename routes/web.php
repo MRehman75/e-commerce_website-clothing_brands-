@@ -16,12 +16,7 @@ Route::get('/blog', \App\Livewire\Frontend\BlogList::class)->name('blog.index');
 Route::get('/blog/{slug}', \App\Livewire\Frontend\BlogDetail::class)->name('blog.show');
 
 
-Route::get('/{slug}', function($slug) {
-    $page = \App\Models\Page::where('slug', $slug)
-                ->where('is_active', true)
-                ->firstOrFail();
-    return view('frontend.page', compact('page'));
-});
+
  
 // Order Success Page
 Route::get('/order/success/{orderNumber}', function ($orderNumber) {
@@ -126,7 +121,7 @@ Route::post('/logout', function (Request $request) {
 
     return redirect()->route('login');
 })->name('logout');
-//login
+// //login
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
@@ -184,3 +179,9 @@ Route::post('/customer/logout', function () {
 
 
 
+Route::get('/{slug}', function($slug) {
+    $page = \App\Models\Page::where('slug', $slug)
+                ->where('is_active', true)
+                ->firstOrFail();
+    return view('frontend.page', compact('page'));
+});
