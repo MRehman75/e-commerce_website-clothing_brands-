@@ -126,6 +126,33 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
+
+
+
+// Route::post('/login', function (Request $request) {
+
+//     $credentials = $request->only('email', 'password');
+
+//     if (Auth::attempt($credentials)) {
+//         $request->session()->regenerate();
+//         return redirect()->route('admin.dashboard');
+//     }
+
+//     return back()->withErrors([
+//         'email' => 'Invalid credentials',
+//     ]);
+// });
+
+
+
+// Route::post('/login', function (Request $request) {
+//     dd($request->only('email', 'password'));
+// });
+
+
+
+
+
 Route::post('/login', function (Request $request) {
 
     $credentials = $request->only('email', 'password');

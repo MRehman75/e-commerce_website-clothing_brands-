@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2026 at 03:14 PM
+-- Generation Time: Jul 05, 2026 at 10:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,6 +41,22 @@ CREATE TABLE `activity_log` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_log`
+--
+
+INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_type`, `event`, `subject_id`, `causer_type`, `causer_id`, `properties`, `batch_uuid`, `created_at`, `updated_at`) VALUES
+(1, 'default', 'User deleted', 'App\\Models\\User', 'deleted', 3, 'App\\Models\\User', 2, '{\"old\":{\"name\":\"Admin\",\"email\":\"admin@gmail.com\"}}', NULL, '2026-06-23 00:34:34', '2026-06-23 00:34:34'),
+(2, 'default', 'User created', 'App\\Models\\User', 'created', 4, 'App\\Models\\User', 2, '{\"attributes\":{\"name\":\"Anas\",\"email\":\"anas@gmail.com\"}}', NULL, '2026-06-23 00:36:19', '2026-06-23 00:36:19'),
+(3, 'default', 'Customer created', 'App\\Models\\Customer', 'created', 8, 'App\\Models\\User', 2, '{\"attributes\":{\"name\":\"ahmed\",\"email\":\"ahmed@gmail.com\",\"status\":\"active\",\"total_orders\":0,\"total_spent\":\"0.00\"}}', NULL, '2026-06-23 02:29:38', '2026-06-23 02:29:38'),
+(4, 'default', 'Customer created', 'App\\Models\\Customer', 'created', 9, 'App\\Models\\User', 2, '{\"attributes\":{\"name\":\"Ab officia ducimus \",\"email\":\"qugenav@mailinator.com\",\"status\":\"blocked\",\"total_orders\":0,\"total_spent\":\"0.00\"}}', NULL, '2026-06-23 02:59:18', '2026-06-23 02:59:18'),
+(5, 'default', 'Customer updated', 'App\\Models\\Customer', 'updated', 9, 'App\\Models\\User', 2, '{\"attributes\":{\"status\":\"active\"},\"old\":{\"status\":\"blocked\"}}', NULL, '2026-06-23 03:00:00', '2026-06-23 03:00:00'),
+(6, 'default', 'Customer created', 'App\\Models\\Customer', 'created', 10, 'App\\Models\\User', 2, '{\"attributes\":{\"name\":\"Esse magnam omnis ex\",\"email\":\"qogaqa@mailinator.com\",\"status\":\"active\",\"total_orders\":0,\"total_spent\":\"0.00\"}}', NULL, '2026-06-23 03:05:34', '2026-06-23 03:05:34'),
+(7, 'default', 'User deleted', 'App\\Models\\User', 'deleted', 4, 'App\\Models\\User', 2, '{\"old\":{\"name\":\"Anas\",\"email\":\"anas@gmail.com\"}}', NULL, '2026-06-30 00:11:31', '2026-06-30 00:11:31'),
+(8, 'default', 'User created', 'App\\Models\\User', 'created', 5, 'App\\Models\\User', 2, '{\"attributes\":{\"name\":\"Anas Tariq\",\"email\":\"anastariq030@gmail.com\"}}', NULL, '2026-06-30 00:13:06', '2026-06-30 00:13:06'),
+(9, 'default', 'User updated', 'App\\Models\\User', 'updated', 2, NULL, NULL, '{\"attributes\":[],\"old\":[]}', NULL, '2026-06-30 07:56:22', '2026-06-30 07:56:22'),
+(10, 'default', 'User updated', 'App\\Models\\User', 'updated', 2, NULL, NULL, '{\"attributes\":[],\"old\":[]}', NULL, '2026-07-01 00:10:56', '2026-07-01 00:10:56');
 
 -- --------------------------------------------------------
 
@@ -86,6 +102,14 @@ CREATE TABLE `banners` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `title`, `subtitle`, `image`, `link`, `open_in_new_tab`, `position`, `starts_at`, `ends_at`, `sort_order`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Summer Sale 2026', 'Up to 50% off on all items', 'banners/HFKshA7u6w0KucUBPmnmAYDCRb1B38wlENoawFE7.jpg', 'https://chatgpt.com/', 0, 'popup', '2026-06-24', '2026-06-30', 1, 1, '2026-06-24 01:26:30', '2026-06-24 04:59:30', NULL),
+(2, 'Mobail Sale', '50% off', 'banners/xL8oSysF1YpRfnkhkHcmNgrF4WSaNVVQMXhz1eI0.jpg', '', 0, 'homepage_top', '2026-06-24', '2026-06-25', 1, 1, '2026-06-24 01:44:16', '2026-06-24 02:11:42', '2026-06-24 02:11:42');
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +135,14 @@ CREATE TABLE `blog_posts` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blog_posts`
+--
+
+INSERT INTO `blog_posts` (`id`, `title`, `slug`, `excerpt`, `content`, `featured_image`, `status`, `is_featured`, `allow_comments`, `meta_title`, `meta_description`, `meta_keywords`, `views`, `published_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Fuga Sequi eu dolor', 'fuga-sequi-eu-dolor', 'A aliqua Nostrum qu', '', '', 'draft', 1, 0, 'Qui minima ut sint f', 'Eius dolore sit ut ', 'Natus voluptate volu', 0, '2021-11-20 19:00:00', '2026-06-24 05:57:36', '2026-06-24 05:58:23', '2026-06-24 05:58:23'),
+(2, 'Getting Started with Laravel: A Complete PHP Framework Guide', 'getting-started-with-laravel-a-complete-php-framework-guide', 'Learn Laravel from scratch — the most popular PHP framework for building modern web applications with MVC architecture, Eloquent ORM, and Blade templating.', '<p>Laravel is one of the most powerful PHP frameworks available today.&nbsp;<br />\nIt follows the MVC (Model-View-Controller) pattern which makes code&nbsp;<br />\nclean and organized.</p>\n\n<p>Key Features of Laravel:</p>\n\n<p>1. Eloquent ORM<br />\nLaravel&#39;s ORM makes database operations simple and intuitive.&nbsp;<br />\nInstead of writing raw SQL, you write clean PHP code.</p>\n\n<p>2. Blade Templating<br />\nBlade is Laravel&#39;s built-in template engine that allows you to&nbsp;<br />\nwrite dynamic HTML with simple syntax like @foreach, @if, and @extends.</p>\n\n<p>3. Artisan CLI<br />\nLaravel comes with a powerful command-line tool called Artisan&nbsp;<br />\nthat helps you generate code, run migrations, and manage your app.</p>\n\n<p>4. Middleware<br />\nMiddleware acts as a filter for HTTP requests, perfect for&nbsp;<br />\nauthentication and authorization.</p>\n\n<p>5. Migration System<br />\nDatabase version control made easy &mdash; create and modify tables&nbsp;<br />\nusing PHP code instead of SQL.</p>\n\n<p>Getting started is simple:<br />\ncomposer create-project laravel/laravel myapp<br />\ncd myapp<br />\nphp artisan serve</p>\n', 'blog/vAyqu8PhA0nrByghyqDjxlQrEgk0jopO8KcoLHUO.jpg', 'published', 1, 1, 'Laravel PHP Framework Guide — Learn MVC, ORM & Blade', 'Complete guide to Laravel PHP framework. Learn MVC pattern, \nEloquent ORM, Blade templating, Middleware and Artisan CLI \nwith practical examples.\n', 'Laravel, PHP, Framework, MVC, Eloquent ORM, Blade, Artisan,  Web Development, PHP Tutorial', 2, '2026-06-23 19:00:00', '2026-06-24 06:00:17', '2026-06-30 00:26:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -150,14 +182,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-da4b9237bacccdf19c0760cab7aec4a8359010b0', 'i:1;', 1781683518),
-('laravel-cache-da4b9237bacccdf19c0760cab7aec4a8359010b0:timer', 'i:1781683518;', 1781683518);
 
 -- --------------------------------------------------------
 
@@ -228,8 +252,7 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`id`, `code`, `type`, `value`, `min_order_amount`, `max_discount`, `usage_limit`, `used_count`, `start_date`, `end_date`, `is_active`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'SH-D95A', 'percentage', 50.00, 0.00, 1000.00, 2, 0, '2026-06-17', '2026-06-30', 1, 'Eid special discount - 50% off on orders above Rs. 1000', '2026-06-17 03:11:07', '2026-06-22 05:00:58'),
-(2, 'BO-EC55', 'percentage', 1.00, 50.00, 20.00, NULL, 0, '2026-06-22', '2026-06-23', 1, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbb', '2026-06-22 05:07:57', '2026-06-22 05:13:41');
+(1, 'SH-D95A', 'percentage', 50.00, 500.00, 250.00, 1, 1, '2026-06-17', '2026-07-01', 1, 'Eid special discount - 50% off on orders above Rs. 1000', '2026-06-17 03:11:07', '2026-06-30 00:04:06');
 
 -- --------------------------------------------------------
 
@@ -264,7 +287,14 @@ INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `city`, `address`, `sta
 (4, 'Huzifa', 'huzifa@gmail.com', '0300-4815397', 'Lahore', '5#No Stop Khana nau Lahore', 'active', 0.00, 0, NULL, '2026-06-18 07:13:59', '2026-06-18 07:16:53', '2026-06-18 07:16:53'),
 (5, 'Anas Tariq', 'anastariq@gmail.com', '03454815398', 'Lahore', '5#No Stop Khana nau Lahore', 'active', 0.00, 0, NULL, '2026-06-18 07:19:15', '2026-06-18 07:19:15', NULL),
 (6, 'Test User', 'test123@gmail.com', NULL, NULL, NULL, 'active', 0.00, 0, NULL, '2026-06-18 07:21:54', '2026-06-18 07:21:54', NULL),
-(7, 'ansir', 'ansir@gmail.com', '03096060838', NULL, '5#No Stop Khana nau Lahore', 'active', 650.00, 1, '2026-06-18 07:26:53', '2026-06-18 07:26:53', '2026-06-18 07:26:53', NULL);
+(7, 'ansir', 'ansir@gmail.com', '03096060838', NULL, '5#No Stop Khana nau Lahore', 'active', 650.00, 1, '2026-06-18 07:26:53', '2026-06-18 07:26:53', '2026-06-18 07:26:53', NULL),
+(8, 'ahmed', 'ahmed@gmail.com', '+923001234567', 'Lahore', '5#No Stop Khana nau Lahore', 'active', 0.00, 0, NULL, '2026-06-23 02:29:38', '2026-06-23 02:29:38', NULL),
+(9, 'Ab officia ducimus ', 'qugenav@mailinator.com', '+12214288478', 'Sed quod dolore ad e', 'Sit alias anim offi', 'active', 0.00, 0, NULL, '2026-06-23 02:59:18', '2026-06-23 03:00:00', NULL),
+(10, 'Esse magnam omnis ex', 'qogaqa@mailinator.com', '+9216724539854', 'Dolore ut sit ut lib', 'Deleniti quia anim n', 'active', 0.00, 0, NULL, '2026-06-23 03:05:34', '2026-06-23 03:05:34', NULL),
+(11, 'Voluptate voluptatem', 'bijin@mailinator.com', '+9216724539854', 'Dolore ut sit ut lib', 'Deleniti quia anim n', 'active', 0.00, 0, NULL, '2026-06-23 03:12:07', '2026-06-23 03:12:07', NULL),
+(12, 'Possimus dolorum si', 'xihege@mailinator.com', '+17296216345', 'Totam enim veniam q', 'Est est nulla minim ', 'active', 0.00, 0, NULL, '2026-06-23 04:15:52', '2026-06-23 04:15:52', NULL),
+(13, 'Ameer Hussain', 'ameerullahmayo1866@gmail.com', '+923248573797', 'Lahore', '5#No Stop Khana nau Lahore', 'active', 900.00, 1, '2026-06-30 00:04:06', '2026-06-29 23:46:05', '2026-06-30 00:04:06', NULL),
+(14, 'Anas Tariq', 'anastariq030@gmail.com', '03454815398', NULL, '5#No Stop Khana nau Lahore', 'active', 650.00, 1, '2026-06-29 23:51:17', '2026-06-29 23:51:17', '2026-06-29 23:51:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -322,6 +352,13 @@ CREATE TABLE `footer_columns` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `footer_columns`
+--
+
+INSERT INTO `footer_columns` (`id`, `title`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(2, 'Mart', 1, 1, '2026-06-29 01:33:36', '2026-06-29 01:33:36');
+
 -- --------------------------------------------------------
 
 --
@@ -339,6 +376,13 @@ CREATE TABLE `footer_links` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `footer_links`
+--
+
+INSERT INTO `footer_links` (`id`, `footer_column_id`, `label`, `url`, `open_in_new_tab`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(2, 2, 'About Us', 'https://web.whatsapp.com/', 0, 1, 1, '2026-06-29 01:34:23', '2026-06-29 01:34:40');
 
 -- --------------------------------------------------------
 
@@ -377,7 +421,7 @@ CREATE TABLE `footer_settings` (
 --
 
 INSERT INTO `footer_settings` (`id`, `logo`, `company_name`, `about_text`, `copyright_text`, `email`, `phone`, `address`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok`, `whatsapp`, `show_newsletter`, `newsletter_title`, `newsletter_subtitle`, `playstore_link`, `appstore_link`, `payment_methods`, `show_bottom_bar`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'Laravel', NULL, '© 2026 Laravel. All rights reserved.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Subscribe to our Newsletter', 'Get the latest deals and offers.', NULL, NULL, '[\"visa\",\"mastercard\",\"easypaisa\",\"jazzcash\"]', 1, '2026-06-22 07:59:45', '2026-06-22 07:59:45');
+(1, 'footer/E6OsdZbz7TUlv3rbZEY4c8TlV3biOODxXbdUI83f.jpg', 'My Shop online Mart', NULL, '© 2026 Mart. All rights reserved.', 'ameerullahmayo1866@gmail.com', '+92 3248573797', '5 No# stop khana nau Lahore.', 'https://www.facebook.com/', 'https://www.instagram.com/?hl=en', 'https://x.com/downdetector?lang=en', 'https://www.youtube.com/watch?v', 'https://www.tiktok.com/foryou?lang=en', '+92 3248573797', 1, 'Subscribe to our Newsletter', 'Get the latest deals and offers.', 'https://play.google.com/store/games?hl=en&pli=1', 'https://www.apple.com/app-store/', '[\"visa\",\"mastercard\",\"easypaisa\",\"jazzcash\",\"bank\",\"cod\"]', 1, '2026-06-22 07:59:45', '2026-06-29 01:32:20');
 
 -- --------------------------------------------------------
 
@@ -434,7 +478,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `site_name`, `site_tagline`, `site_logo`, `site_favicon`, `site_email`, `site_phone`, `site_address`, `meta_title`, `meta_description`, `meta_keywords`, `og_image`, `google_analytics_id`, `header_scripts`, `footer_scripts`, `currency_code`, `currency_symbol`, `currency_position`, `timezone`, `date_format`, `language`, `mail_driver`, `mail_host`, `mail_port`, `mail_username`, `mail_password`, `mail_encryption`, `mail_from_address`, `mail_from_name`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok`, `linkedin`, `whatsapp`, `maintenance_mode`, `maintenance_message`, `maintenance_allowed_ips`, `created_at`, `updated_at`) VALUES
-(1, 'Laravel', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'USD', '$', 'before', 'Asia/Karachi', 'd M Y', 'en', 'smtp', NULL, NULL, 'ameerullahmayo1866@gmail.com', '12345678', 'tls', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+923248573797', 0, 'We are under maintenance. Please check back soon.', NULL, '2026-06-15 05:01:08', '2026-06-16 06:46:22');
+(1, 'My Shop Online Mart', 'Pakistan ki behtareen online shopping destination', 'settings/SHtffDNjanelOfkFfWXaT4AOxNrut4eQlDIarpso.jpg', 'settings/DY9JHEuZPk9u383vUDIVSbf3FIdy00tvZO6uVfHl.jpg', 'ameerullahmayo1866@gmail.com', '+92 324 8573797', '5 No# stop khana nau Lahore, Pakistan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'USD', '$', 'before', 'Asia/Karachi', 'd M Y', 'en', 'smtp', 'smtp.gmail.com', '587', 'ameerullahmayo1866@gmail.com', 'dhypptzrpqvsdyzz', 'tls', 'ameerullahmayo1866@gmail.com', 'My Shop online Mart', NULL, NULL, NULL, NULL, NULL, NULL, '+923248573797', 0, '<p>We are under maintenance. Please check back soon.</p>\n', '127.0.0.1', '2026-06-15 05:01:08', '2026-06-29 07:08:42');
 
 -- --------------------------------------------------------
 
@@ -455,6 +499,14 @@ CREATE TABLE `home_sliders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `home_sliders`
+--
+
+INSERT INTO `home_sliders` (`id`, `title`, `subtitle`, `button_text`, `button_link`, `image`, `badge_color`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Summer Sale 2025', 'Up to 50% off on all items', 'Shop Now', '/products', 'sliders/dHkRdxFDyuUftwNUjymWad33Y90YvBpAtFU9gBPc.jpg', 'primary', 1, 1, '2026-06-24 00:31:21', '2026-06-24 00:31:21'),
+(2, 'Books Sales', '50% off', 'Shop Now', 'https://google.com', 'sliders/Wvuk0OJ3v1CKr03dLSSVEeKl8YoEaDgDtkufJnJK.jpg', 'primary', 1, 1, '2026-06-24 01:05:11', '2026-06-24 01:05:11');
 
 -- --------------------------------------------------------
 
@@ -506,6 +558,13 @@ CREATE TABLE `menus` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `name`, `location`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Header Menu', 'header', 1, '2026-06-24 03:13:44', '2026-06-24 03:13:44');
+
 -- --------------------------------------------------------
 
 --
@@ -525,6 +584,13 @@ CREATE TABLE `menu_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `menu_id`, `parent_id`, `label`, `url`, `icon`, `open_in_new_tab`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, 'Home', '/', 'fas fa-home', 0, 1, 1, '2026-06-24 03:15:53', '2026-06-24 03:15:53');
 
 -- --------------------------------------------------------
 
@@ -618,7 +684,9 @@ INSERT INTO `orders` (`id`, `order_number`, `user_id`, `customer_name`, `custome
 (2, 'ORD-IZXLKVST', 2, 'Huzifa', 'huzifa@gmail.com', '0300-4815397', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 45000.00, 0.00, 150.00, 0.00, 45150.00, 'cod', 'paid', 'delivered', 0.00, '', '2026-06-16 05:17:12', '2026-06-16 06:01:36'),
 (3, 'ORD-KXDGQIYY', 2, 'Anas Tariq', 'anastariq@gmail.com', '03454815398', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 45000.00, 0.00, 150.00, 0.00, 45150.00, 'bank_transfer', 'paid', 'delivered', 0.00, '', '2026-06-16 06:09:50', '2026-06-16 06:12:24'),
 (4, 'ORD-3BYN1CUQ', 2, 'Abuhaira', 'Abuhaira@gmail.com', '03006278955', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 550.00, 0.00, 150.00, 0.00, 700.00, 'easypaisa', 'paid', 'delivered', 0.00, '', '2026-06-17 02:52:05', '2026-06-22 06:02:44'),
-(5, 'ORD-DTR1FO6O', 2, 'ansir', 'ansir@gmail.com', '03096060838', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 500.00, 0.00, 150.00, 0.00, 650.00, 'cod', 'paid', 'delivered', 0.00, '', '2026-06-18 07:26:53', '2026-06-22 05:57:09');
+(5, 'ORD-DTR1FO6O', 2, 'ansir', 'ansir@gmail.com', '03096060838', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 500.00, 0.00, 150.00, 0.00, 650.00, 'cod', 'paid', 'delivered', 0.00, '', '2026-06-18 07:26:53', '2026-06-22 05:57:09'),
+(6, 'ORD-HVN3TGN8', 2, 'Anas Tariq', 'anastariq030@gmail.com', '03454815398', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 500.00, 0.00, 150.00, 0.00, 650.00, 'cod', 'paid', 'delivered', 0.00, '', '2026-06-29 23:51:17', '2026-06-29 23:54:34'),
+(7, 'ORD-32JB8MNY', 2, 'Ameer Hussain', 'ameerullahmayo1866@gmail.com', '03248573797', '5#No Stop Khana nau Lahore', '5#No Stop Khana nau Lahore', 1000.00, 0.00, 150.00, 250.00, 900.00, 'cod', 'paid', 'delivered', 0.00, '', '2026-06-30 00:04:06', '2026-06-30 00:04:22');
 
 -- --------------------------------------------------------
 
@@ -649,7 +717,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `prod
 (3, 3, 1, 'Redmi Note 13', 'RED-NOT-13-1DB3', 1, 45000.00, 45000.00, '2026-06-16 06:09:50', '2026-06-16 06:09:50'),
 (4, 4, 3, 'Books', 'BO-EC55', 1, 50.00, 50.00, '2026-06-17 02:52:05', '2026-06-17 02:52:05'),
 (5, 4, 4, 'Shoes', 'SH-D95A', 1, 500.00, 500.00, '2026-06-17 02:52:05', '2026-06-17 02:52:05'),
-(6, 5, 4, 'Shoes', 'SH-D95A', 1, 500.00, 500.00, '2026-06-18 07:26:53', '2026-06-18 07:26:53');
+(6, 5, 4, 'Shoes', 'SH-D95A', 1, 500.00, 500.00, '2026-06-18 07:26:53', '2026-06-18 07:26:53'),
+(7, 6, 4, 'Shoes', 'SH-D95A', 1, 500.00, 500.00, '2026-06-29 23:51:17', '2026-06-29 23:51:17'),
+(8, 7, 4, 'Shoes', 'SH-D95A', 2, 500.00, 1000.00, '2026-06-30 00:04:06', '2026-06-30 00:04:06');
 
 -- --------------------------------------------------------
 
@@ -670,6 +740,13 @@ CREATE TABLE `pages` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `title`, `slug`, `content`, `meta_title`, `meta_description`, `is_fixed`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'About Us', 'about-us', '<p>Welcome to MyShop! We are a leading e-commerce store providing quality products at affordable prices. Our mission is to deliver the best shopping experience to our customers.</p>\n', 'About Us - MyShop', 'Learn more about MyShop, your trusted online shopping destination in Pakistan.', 0, 1, '2026-06-24 01:11:17', '2026-06-24 01:11:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -715,7 +792,8 @@ INSERT INTO `payment_gateways` (`id`, `name`, `slug`, `logo`, `description`, `me
 (1, 'JazzCash', 'jazzcash', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test', 0, 1, '2026-06-15 05:01:08', '2026-06-15 05:01:08'),
 (2, 'Easypaisa', 'easypaisa', NULL, NULL, NULL, 'ameerullahmayo1866@gmail.com', '12345678', NULL, NULL, 'test', 1, 2, '2026-06-15 05:01:08', '2026-06-22 05:55:31'),
 (4, 'PayPal', 'paypal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test', 0, 4, '2026-06-15 05:01:08', '2026-06-15 05:01:08'),
-(6, 'Bank Transfer', 'bank_transfer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test', 0, 6, '2026-06-15 05:01:08', '2026-06-15 05:01:08');
+(6, 'Bank Transfer', 'bank_transfer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test', 0, 6, '2026-06-15 05:01:08', '2026-06-15 05:01:08'),
+(7, 'UNION', 'union', NULL, '', '', 'ameerullahmayo1866@gmail.com', '12345678', '', NULL, 'live', 1, 1, '2026-06-29 06:39:32', '2026-06-29 06:41:19');
 
 -- --------------------------------------------------------
 
@@ -763,7 +841,19 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `slug`, `description`, `module`, `created_at`, `updated_at`) VALUES
-(1, 'View Orders', 'View Orders', 'Orders dekhne ki ijazat', 'Orders', '2026-06-17 05:16:32', '2026-06-17 05:16:32');
+(1, 'View Orders', 'View Orders', 'Orders dekhne ki ijazat', 'Orders', '2026-06-17 05:16:32', '2026-06-17 05:16:32'),
+(2, 'View Payments', 'View Payments', '', 'Payments', '2026-06-23 00:42:15', '2026-06-23 00:42:15'),
+(3, 'View Reports', 'View Reports', '', 'Reports', '2026-06-23 00:43:09', '2026-06-23 00:43:09'),
+(4, 'Edit Settings ', 'Edit Settings ', '', 'Settings', '2026-06-23 00:43:46', '2026-06-23 00:43:46'),
+(5, 'View Customers', 'View Customers', '', 'Customers', '2026-06-23 00:44:58', '2026-06-23 00:44:58'),
+(6, 'Edit Customers', 'Edit Customers', '', 'Customers', '2026-06-23 00:45:30', '2026-06-23 00:45:30'),
+(7, 'View Products', 'View Products', '', 'Products', '2026-06-23 00:46:17', '2026-06-23 00:46:17'),
+(8, 'Add Products', 'Add Products', '', 'Products', '2026-06-23 00:46:47', '2026-06-23 00:46:47'),
+(9, ' Edit Products', ' Edit Products', '', 'Products', '2026-06-23 00:47:21', '2026-06-23 00:47:21'),
+(10, 'Delete Products', 'Delete Products', '', 'Products', '2026-06-23 00:47:52', '2026-06-23 00:47:52'),
+(11, 'Edit Orders', 'Edit Orders', '', 'Orders', '2026-06-23 00:48:40', '2026-06-23 00:48:40'),
+(12, 'Delete Orders', 'Delete Orders', '', 'Orders', '2026-06-23 00:49:12', '2026-06-23 00:49:12'),
+(13, 'Reports', 'sale', 'sale reports', 'sale', '2026-06-30 00:15:33', '2026-06-30 00:15:33');
 
 -- --------------------------------------------------------
 
@@ -784,7 +874,19 @@ CREATE TABLE `permission_role` (
 --
 
 INSERT INTO `permission_role` (`id`, `permission_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, NULL);
+(2, 5, 2, NULL, NULL),
+(3, 6, 2, NULL, NULL),
+(4, 1, 2, NULL, NULL),
+(5, 11, 2, NULL, NULL),
+(6, 12, 2, NULL, NULL),
+(7, 2, 2, NULL, NULL),
+(8, 7, 2, NULL, NULL),
+(9, 8, 2, NULL, NULL),
+(10, 9, 2, NULL, NULL),
+(11, 10, 2, NULL, NULL),
+(12, 3, 2, NULL, NULL),
+(13, 4, 2, NULL, NULL),
+(14, 3, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -844,7 +946,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `slug`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Order Manager', 'Order Manager', 'Orders aur customers manage karta hai', '2026-06-17 05:14:14', '2026-06-17 05:14:14');
+(2, 'Super Admin', 'super-admin', 'Full access to all modules', '2026-06-23 00:52:52', '2026-06-23 00:52:52'),
+(3, 'Anas Tariq', 'anas tariq', 'anas tariq mayo branch', '2026-06-30 00:18:00', '2026-06-30 00:18:00');
 
 -- --------------------------------------------------------
 
@@ -865,7 +968,7 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, NULL, NULL);
+(2, 2, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -889,6 +992,16 @@ CREATE TABLE `seo_settings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `seo_settings`
+--
+
+INSERT INTO `seo_settings` (`id`, `page`, `meta_title`, `meta_description`, `meta_keywords`, `og_title`, `og_description`, `og_image`, `canonical_url`, `no_index`, `no_follow`, `custom_scripts`, `created_at`, `updated_at`) VALUES
+(1, 'home', 'Online Shopping in Pakistan - Best Deals | YourStore', 'Shop the latest products online in Pakistan with fast delivery, secure payment, and amazing discounts. Cash on delivery available across Punjab.', 'online shopping pakistan, ecommerce lahore, buy online pakistan, cash on delivery', 'YourStore - Shop Online in Pakistan', 'Discover amazing deals on electronics, fashion, and more. Fast delivery across Pakistan with Cash on Delivery option.', 'seo/frz2zB0Oz8lHGBv3hF8talaYQM8eSGjM95zP77Cl.jpg', 'https://chatgpt.com/', 0, 0, '<head>\n    <title>{{ $seo->meta_title ?? \'Default Title\' }}</title>\n    <meta name=\"description\" content=\"{{ $seo->meta_description ?? \'\' }}\">\n    <meta name=\"keywords\" content=\"{{ $seo->meta_keywords ?? \'\' }}\">\n    <meta property=\"og:title\" content=\"{{ $seo->og_title ?? \'\' }}\">\n    <meta property=\"og:description\" content=\"{{ $seo->og_description ?? \'\' }}\">\n    <meta property=\"og:image\" content=\"{{ $seo->og_image ? asset(\'storage/\'.$seo->og_image) : \'\' }}\">\n    <link rel=\"canonical\" href=\"{{ $seo->canonical_url ?? url()->current() }}\">\n</head>', '2026-06-28 23:46:09', '2026-06-29 00:40:40'),
+(2, 'about', '', '', '', '', '', NULL, '', 0, 0, '', '2026-06-28 23:46:33', '2026-06-28 23:46:33'),
+(3, 'contact', '', '', '', '', '', NULL, '', 0, 0, '', '2026-06-28 23:46:34', '2026-06-28 23:46:34'),
+(4, 'blog', '', '', '', '', '', NULL, '', 0, 0, '', '2026-06-28 23:46:39', '2026-06-28 23:46:39');
 
 -- --------------------------------------------------------
 
@@ -1005,7 +1118,9 @@ INSERT INTO `transactions` (`id`, `transaction_id`, `order_id`, `user_id`, `amou
 (2, 'TXN-FYNJDE9C', 1, 2, 45150.00, 'cod', 'completed', 'PKR', NULL, '2026-06-16 06:05:35', '2026-06-16 06:05:35'),
 (3, 'TXN-KQSDIJPS', 3, 2, 45150.00, 'bank_transfer', 'pending', 'PKR', '', '2026-06-16 06:09:50', '2026-06-16 06:09:50'),
 (4, 'TXN-NQBKIB4Y', 4, 2, 700.00, 'easypaisa', 'pending', 'PKR', '', '2026-06-17 02:52:05', '2026-06-17 02:52:05'),
-(5, 'TXN-QPGRB45Z', 5, 2, 650.00, 'cod', 'completed', 'PKR', '', '2026-06-18 07:26:53', '2026-06-18 07:26:53');
+(5, 'TXN-QPGRB45Z', 5, 2, 650.00, 'cod', 'completed', 'PKR', '', '2026-06-18 07:26:53', '2026-06-18 07:26:53'),
+(6, 'TXN-KQXGTFL4', 6, 2, 650.00, 'cod', 'completed', 'PKR', '', '2026-06-29 23:51:17', '2026-06-29 23:51:17'),
+(7, 'TXN-TQ0ZXKEK', 7, 2, 900.00, 'cod', 'completed', 'PKR', '', '2026-06-30 00:04:06', '2026-06-30 00:04:06');
 
 -- --------------------------------------------------------
 
@@ -1030,8 +1145,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Test User', 'test@example.com', '2026-06-15 05:01:09', '$2y$12$UOvj0s8x4mo8f4RNWliCqeDLPTdLfP1n3b5WnkIOtS5EVDqZilsia', '4MwBlM9yFM', '2026-06-15 05:01:10', '2026-06-15 05:01:10'),
-(2, 'Ameer Hussain', 'ameerullahmayo1866@gmail.com', NULL, '$2y$12$QOePjwmlr6T3QABcwLk36e2mNB0X9zKAD87FXGT9v1i.0jvbhg4MC', NULL, '2026-06-15 05:03:22', '2026-06-15 05:03:22'),
-(3, 'Admin', 'admin@gmail.com', NULL, '$2y$12$IElc67TMS99QevGbUKpE4O7kvUu7tsJjIJbgFEadVTxCjZcLISUnq', NULL, '2026-06-15 05:05:58', '2026-06-17 07:21:25');
+(2, 'Ameer Hussain', 'ameerullahmayo1866@gmail.com', NULL, '$2y$12$0KBzNO8TqLboiam3QbbkgeGd7Jq8OS0OitjQopI7gixCOkUMjl1aW', NULL, '2026-06-15 05:03:22', '2026-07-01 00:10:55'),
+(5, 'Anas Tariq', 'anastariq030@gmail.com', NULL, '$2y$12$oShOvAD52aVLAJop7JIWdewdJT1qIczhL8Gtq85vG0yMXjzMmT.sO', NULL, '2026-06-30 00:13:06', '2026-06-30 00:13:06');
 
 --
 -- Indexes for dumped tables
@@ -1331,7 +1446,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `activity_logs`
@@ -1343,13 +1458,13 @@ ALTER TABLE `activity_logs`
 -- AUTO_INCREMENT for table `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `blog_posts`
 --
 ALTER TABLE `blog_posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -1373,7 +1488,7 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1391,13 +1506,13 @@ ALTER TABLE `flash_sales`
 -- AUTO_INCREMENT for table `footer_columns`
 --
 ALTER TABLE `footer_columns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `footer_links`
 --
 ALTER TABLE `footer_links`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `footer_settings`
@@ -1415,7 +1530,7 @@ ALTER TABLE `general_settings`
 -- AUTO_INCREMENT for table `home_sliders`
 --
 ALTER TABLE `home_sliders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1427,13 +1542,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1445,25 +1560,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payment_gateways`
 --
 ALTER TABLE `payment_gateways`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -1475,13 +1590,13 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `permission_role`
 --
 ALTER TABLE `permission_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1493,19 +1608,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `seo_settings`
 --
 ALTER TABLE `seo_settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `shipping_methods`
@@ -1529,13 +1644,13 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
