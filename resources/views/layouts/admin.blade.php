@@ -547,7 +547,7 @@
             <span>Logout</span>
         </div>
     </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 </div>
@@ -577,7 +577,7 @@
                     <li><a class="dropdown-item small" href="{{ route('admin.settings.general') }}"><i class="fas fa-user me-2"></i>Profile</a></li>
                     <li><a class="dropdown-item small" href="{{ route('admin.settings.payment-gateways') }}"><i class="fas fa-cog me-2"></i>Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item small text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    <li><a class="dropdown-item small text-danger" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -26,36 +26,54 @@
         <div class="col-md-8">
 
             <!-- Order Items -->
-            <div class="card shadow-sm border-0 mb-3">
-                <div class="card-header fw-bold text-white p-3"
-                     style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <i class="fas fa-box me-2"></i> Order Items
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Product</th>
-                                <th>SKU</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($order->items as $item)
-                            <tr>
-                                <td><strong>{{ $item->product_name }}</strong></td>
-                                <td><small class="text-muted">{{ $item->product_sku ?? 'N/A' }}</small></td>
-                                <td>Rs. {{ number_format($item->price, 2) }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td><strong>Rs. {{ number_format($item->total, 2) }}</strong></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="card shadow-sm border-0 mb-3">
+    <div class="card-header fw-bold text-white p-3"
+         style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <i class="fas fa-box me-2"></i> Order Items
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($order->items as $item)
+                <tr>
+                    <td><strong>{{ $item->product_name }}</strong></td>
+                    <td>
+                        @if($item->size)
+                            <span class="badge bg-secondary">{{ $item->size }}</span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($item->color)
+                            <span class="badge" style="background:{{ $item->color }}; color:{{ $item->color == '#000000' ? '#fff' : '#000' }};">
+                                {{ $item->color }}
+                            </span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
+                    <td><small class="text-muted">{{ $item->product_sku ?? 'N/A' }}</small></td>
+                    <td>Rs. {{ number_format($item->price, 2) }}</td>
+                    <td>{{ $item->quantity }}</td>
+                    <td><strong>Rs. {{ number_format($item->total, 2) }}</strong></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 
             <!-- Order Summary -->
             <div class="card shadow-sm border-0 mb-3">

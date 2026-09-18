@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Frontend;
 
+use App\Models\Customer; 
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,12 @@ class CustomerRegister extends Component
             'password' => Hash::make($this->password),
         ]);
 
+        Customer::create([
+        'name'   => $this->name,
+        'email'  => $this->email,
+        'status' => 'active',
+        ]);
+
         Auth::login($user);
         session()->regenerate();
 
@@ -55,6 +62,6 @@ class CustomerRegister extends Component
     public function render()
     {
         return view('livewire.frontend.customer-register')
-            ->layout('layouts.frontend');
+            ->layout('components.layouts.app');
     }
 }

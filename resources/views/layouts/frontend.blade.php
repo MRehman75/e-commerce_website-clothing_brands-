@@ -202,7 +202,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item small" href="{{ route('admin.dashboard') }}">
+                            <a class="dropdown-item small" href="{{ route('dashboard.index') }}">
                                 <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                             </a>
                         </li>

@@ -44,6 +44,6 @@ class CustomerLogin extends Component
     public function render()
     {
         return view('livewire.frontend.customer-login')
-            ->layout('layouts.frontend');
+            ->layout('components.layouts.app');
     }
 }

@@ -13,6 +13,10 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
     <div class="row g-4">
         {{-- Left Column --}}
         <div class="col-lg-8">
@@ -52,7 +56,7 @@
 
                     {{-- CKEditor Description --}}
                     <div class="mt-3">
-                        <label class="form-label fw-semibold">CKEditor</label>
+                        <label class="form-label fw-semibold">Description</label>
                         <div wire:ignore>
                             <textarea id="product-ckeditor"></textarea>
                         </div>
@@ -123,6 +127,112 @@
                         @endif
                         <input wire:model="gallery" type="file" class="form-control" accept="image/*" multiple>
                     </div>
+                </div>
+            </div>
+
+            {{-- Sizes --}}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-semibold">Sizes</div>
+                <div class="card-body">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-5">
+                            <input wire:model="sizeName" type="text" class="form-control" placeholder="Size (e.g. S, M, L)">
+                        </div>
+                        <div class="col-md-4">
+                            <input wire:model="sizeStock" type="number" class="form-control" placeholder="Stock" min="0">
+                        </div>
+                        <div class="col-md-3">
+                            <button wire:click="addSize" class="btn btn-primary w-100">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+
+                    @if(count($sizes) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Stock</th>
+                                        <th style="width:50px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($sizes as $index => $size)
+                                        <tr>
+                                            <td>{{ $size['size_name'] }}</td>
+                                            <td>{{ $size['stock'] ?? 0 }}</td>
+                                            <td>
+                                                <button wire:click="removeSize({{ $index }})" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p class="text-muted small">No sizes added yet.</p>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Colors --}}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-semibold">Colors</div>
+                <div class="card-body">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-4">
+                            <input wire:model="colorName" type="text" class="form-control" placeholder="Color (e.g. Black)">
+                        </div>
+                        <div class="col-md-3">
+                            <input wire:model="colorCode" type="color" class="form-control" style="padding:2px; height:38px;">
+                        </div>
+                        <div class="col-md-3">
+                            <input wire:model="colorStock" type="number" class="form-control" placeholder="Stock" min="0">
+                        </div>
+                        <div class="col-md-2">
+                            <button wire:click="addColor" class="btn btn-primary w-100">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    @if(count($colors) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Color</th>
+                                        <th>Code</th>
+                                        <th>Stock</th>
+                                        <th style="width:50px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($colors as $index => $color)
+                                        <tr>
+                                            <td>
+                                                <span class="badge" style="background:{{ $color['color_code'] }}; color:{{ $color['color_code'] == '#000000' ? '#fff' : '#000' }}; width:30px; height:20px; display:inline-block; border-radius:4px; margin-right:8px;"></span>
+                                                {{ $color['color_name'] }}
+                                            </td>
+                                            <td>{{ $color['color_code'] }}</td>
+                                            <td>{{ $color['stock'] ?? 0 }}</td>
+                                            <td>
+                                                <button wire:click="removeColor({{ $index }})" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p class="text-muted small">No colors added yet.</p>
+                    @endif
                 </div>
             </div>
 
@@ -247,7 +357,6 @@
                 ],
             });
 
-            // Edit mode mein existing description load karo
             CKEDITOR.instances['product-ckeditor'].on('instanceReady', function () {
                 const content = @json($description ?? '');
                 if (content) {
@@ -255,13 +364,11 @@
                 }
             });
 
-            // Livewire ko update karo
             CKEDITOR.instances['product-ckeditor'].on('change', function () {
                 @this.set('description', CKEDITOR.instances['product-ckeditor'].getData());
             });
         }
 
-        // Page load hote hi init karo (yeh modal nahi hai, direct page hai)
         document.addEventListener('DOMContentLoaded', function () {
             setTimeout(initProductCKEditor, 500);
         });

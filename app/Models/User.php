@@ -30,6 +30,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+           
+    public function addresses()
+    {
+            return $this->hasMany(UserAddress::class);
+    }
 
     public function roles()
     {
@@ -54,6 +59,35 @@ class User extends Authenticatable
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
     }
+
+       public function wishlist()
+{
+    return $this->hasMany(Wishlist::class);
+}
+
+
+public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+
+public function notifications()
+{
+    return $this->hasMany(Notification::class);
+}
+
+
+public function paymentMethods()
+{
+    return $this->hasMany(CustomerPaymentMethod::class);
+}
+
+
+public function loginHistory()
+{
+    return $this->hasMany(LoginHistory::class);
+}
 
 
     // app/Models/User.php mein add karo

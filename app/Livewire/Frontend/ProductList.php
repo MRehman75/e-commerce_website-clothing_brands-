@@ -51,42 +51,47 @@ class ProductList extends Component
             return;
         }
 
-        $cart = session()->get('cart', []);
+        if (auth('customer')->check()) {
+            $cartItem = \App\Models\Carts::where('user_id', auth('customer')->id())
+                ->where('product_id', $product->id)
+                ->first();
 
-        // ✅ Active flash sale check karo
-        $flashSale = FlashSale::where('is_active', true)
-            ->where('start_time', '<=', now())
-            ->where('end_time', '>=', now())
-            ->first();
-
-        $finalPrice = (float) $product->price;
-        if ($flashSale) {
-          $finalPrice = $finalPrice - ($finalPrice * $flashSale->discount_percentage / 100);
-        }
-
-        if (isset($cart[$productId])) {
-            if ($cart[$productId]['quantity'] >= $product->stock) {
-                $this->dispatch('notify', type: 'error', message: 'Stock mein itni quantity nahi!');
-                return;
+            if ($cartItem) {
+                if ($cartItem->quantity >= $product->stock) {
+                    $this->dispatch('notify', type: 'error', message: 'Stock mein itni quantity nahi!');
+                    return;
+                }
+                $cartItem->quantity += 1;
+                $cartItem->save();
+            } else {
+                \App\Models\Carts::create([
+                    'user_id' => auth('customer')->id(),
+                    'product_id' => $product->id,
+                    'quantity' => 1,
+                ]);
             }
-            $cart[$productId]['quantity']++;
-            $cart[$productId]['total'] = $cart[$productId]['price'] * $cart[$productId]['quantity'];
         } else {
-            $cart[$productId] = [
-                'product_id' => $product->id,
-                'name'       => $product->name,
-                'sku'        => $product->sku,
-                'price'      => $finalPrice,
-                'quantity'   => 1,
-                'total'      => $finalPrice,
-                'image'      => $product->image,
-            ];
+            $cart = session()->get('cart', []);
+
+            if (isset($cart[$product->id])) {
+                $cart[$product->id]['quantity'] += 1;
+                $cart[$product->id]['total'] = $cart[$product->id]['price'] * $cart[$product->id]['quantity'];
+            } else {
+                $cart[$product->id] = [
+                    'product_id' => $product->id,
+                    'name'       => $product->name,
+                    'price'      => $product->price,
+                    'image'      => $product->image,
+                    'quantity'   => 1,
+                    'total'      => $product->price,
+                ];
+            }
+
+            session()->put('cart', $cart);
         }
 
-        session()->put('cart', $cart);
-        $count = array_sum(array_column($cart, 'quantity'));
-        $this->dispatch('cartUpdated', count: $count);
-        $this->dispatch('notify', type: 'success', message: "{$product->name} cart mein add ho gaya!");
+        session()->flash('message', "{$product->name} cart mein add ho gaya!");
+        return $this->redirectRoute('cart');
     }
 
   public function render()

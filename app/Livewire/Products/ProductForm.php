@@ -5,6 +5,8 @@ namespace App\Livewire\Products;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\ProductSize;
+use App\Models\ProductColor;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -44,6 +46,15 @@ class ProductForm extends Component
     public $seo_title = '';
     public $seo_description = '';
 
+    // ✅ New: Sizes and Colors
+    public $sizes = [];
+    public $colors = [];
+    public $sizeName = '';
+    public $colorName = '';
+    public $colorCode = '#000000';
+    public $sizeStock = 0;
+    public $colorStock = 0;
+
     protected function rules()
     {
         return [
@@ -58,7 +69,7 @@ class ProductForm extends Component
             'brand_id'        => 'nullable|exists:brands,id',
             'status'          => 'required|in:active,inactive,draft',
             'featured'        => 'boolean',
-            'image'           => ($this->productId ? 'nullable' : 'nullable') . '|image|max:2048',
+            'image'           => 'nullable|image|max:2048',
             'seo_title'       => 'nullable|string|max:200',
             'seo_description' => 'nullable|string|max:500',
         ];
@@ -69,7 +80,7 @@ class ProductForm extends Component
         $this->productId = $productId;
 
         if ($productId) {
-            $product = Product::findOrFail($productId);
+            $product = Product::with(['sizes', 'colors'])->findOrFail($productId);
             $this->name             = $product->name;
             $this->slug             = $product->slug;
             $this->sku              = $product->sku ?? '';
@@ -85,6 +96,10 @@ class ProductForm extends Component
             $this->existingGallery  = $product->gallery ?? [];
             $this->seo_title        = $product->seo_title ?? '';
             $this->seo_description  = $product->seo_description ?? '';
+
+            // ✅ Load sizes and colors
+            $this->sizes = $product->sizes->toArray();
+            $this->colors = $product->colors->toArray();
         }
     }
 
@@ -92,8 +107,6 @@ class ProductForm extends Component
     {
         if (!$this->productId) {
             $this->slug = Str::slug($value);
-
-            // SKU auto-generate — sirf tab jab user ne manually nahi likha
             if (empty($this->sku)) {
                 $this->sku = $this->generateSku($value);
             }
@@ -110,8 +123,64 @@ class ProductForm extends Component
         $words  = array_filter(explode(' ', strtoupper(trim($name))));
         $prefix = implode('-', array_map(fn($w) => substr($w, 0, 3), array_slice($words, 0, 3)));
         $suffix = strtoupper(substr(uniqid(), -4));
-
         return $prefix ? "{$prefix}-{$suffix}" : 'SKU-' . $suffix;
+    }
+
+    // ✅ Size Methods
+    public function addSize()
+    {
+        if (empty($this->sizeName)) {
+            session()->flash('error', 'Please enter size name.');
+            return;
+        }
+
+        $this->sizes[] = [
+            'size_name' => $this->sizeName,
+            'stock' => $this->sizeStock,
+        ];
+
+        $this->sizeName = '';
+        $this->sizeStock = 0;
+    }
+
+    public function removeSize($index)
+    {
+        if (isset($this->sizes[$index])) {
+            // If it's an existing size from database, mark for deletion
+            if (isset($this->sizes[$index]['id']) && $this->sizes[$index]['id']) {
+                ProductSize::find($this->sizes[$index]['id'])->delete();
+            }
+            array_splice($this->sizes, $index, 1);
+        }
+    }
+
+    // ✅ Color Methods
+    public function addColor()
+    {
+        if (empty($this->colorName)) {
+            session()->flash('error', 'Please enter color name.');
+            return;
+        }
+
+        $this->colors[] = [
+            'color_name' => $this->colorName,
+            'color_code' => $this->colorCode,
+            'stock' => $this->colorStock,
+        ];
+
+        $this->colorName = '';
+        $this->colorCode = '#000000';
+        $this->colorStock = 0;
+    }
+
+    public function removeColor($index)
+    {
+        if (isset($this->colors[$index])) {
+            if (isset($this->colors[$index]['id']) && $this->colors[$index]['id']) {
+                ProductColor::find($this->colors[$index]['id'])->delete();
+            }
+            array_splice($this->colors, $index, 1);
+        }
     }
 
     public function save()
@@ -152,10 +221,53 @@ class ProductForm extends Component
         }
 
         if ($this->productId) {
-            Product::findOrFail($this->productId)->update($data);
+            $product = Product::findOrFail($this->productId);
+            $product->update($data);
+
+            // ✅ Save sizes
+            ProductSize::where('product_id', $product->id)->delete();
+            foreach ($this->sizes as $size) {
+                ProductSize::create([
+                    'product_id' => $product->id,
+                    'size_name' => $size['size_name'],
+                    'stock' => $size['stock'] ?? 0,
+                ]);
+            }
+
+            // ✅ Save colors
+            ProductColor::where('product_id', $product->id)->delete();
+            foreach ($this->colors as $color) {
+                ProductColor::create([
+                    'product_id' => $product->id,
+                    'color_name' => $color['color_name'],
+                    'color_code' => $color['color_code'],
+                    'stock' => $color['stock'] ?? 0,
+                ]);
+            }
+
             session()->flash('success', 'Product updated successfully.');
         } else {
-            Product::create($data);
+            $product = Product::create($data);
+
+            // ✅ Save sizes for new product
+            foreach ($this->sizes as $size) {
+                ProductSize::create([
+                    'product_id' => $product->id,
+                    'size_name' => $size['size_name'],
+                    'stock' => $size['stock'] ?? 0,
+                ]);
+            }
+
+            // ✅ Save colors for new product
+            foreach ($this->colors as $color) {
+                ProductColor::create([
+                    'product_id' => $product->id,
+                    'color_name' => $color['color_name'],
+                    'color_code' => $color['color_code'],
+                    'stock' => $color['stock'] ?? 0,
+                ]);
+            }
+
             session()->flash('success', 'Product created successfully.');
         }
 

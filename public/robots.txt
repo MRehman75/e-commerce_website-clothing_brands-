@@ -1,2 +1,62 @@
+# ============================================================
+# ROBOTS.TXT - VELENZA (velenza.pk)
+# ============================================================
+# This file tells search engines which pages to crawl and index.
+# ============================================================
+
 User-agent: *
-Disallow:
+Allow: /
+
+# ============================================================
+# DISALLOW - Pages that shouldn't be indexed
+# ============================================================
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /cart
+Disallow: /checkout
+Disallow: /customer/
+Disallow: /profile
+Disallow: /api/
+Disallow: /livewire/
+Disallow: /storage/tmp/
+Disallow: /_debugbar/
+Disallow: /vendor/
+Disallow: /css/
+Disallow: /js/
+Disallow: /images/
+Disallow: /fonts/
+
+# ============================================================
+# DISALLOW - Query parameters (duplicate content)
+# ============================================================
+Disallow: /*?*
+Disallow: /*?sort=
+Disallow: /*?page=
+Disallow: /*?filter=
+Disallow: /*?search=
+
+# ============================================================
+# DISALLOW - Specific user agents
+# ============================================================
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ============================================================
+# CRAWL DELAY (for slower bots)
+# ============================================================
+Crawl-delay: 10
+
+# ============================================================
+# SITEMAP LOCATION
+# ============================================================
+Sitemap: https://velenza.pk/sitemap.xml
+Sitemap: https://velenza.pk/sitemap-products.xml
+Sitemap: https://velenza.pk/sitemap-categories.xml
+Sitemap: https://velenza.pk/sitemap-pages.xml

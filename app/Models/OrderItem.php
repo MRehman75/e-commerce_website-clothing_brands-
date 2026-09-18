@@ -16,7 +16,9 @@ class OrderItem extends Model
         'product_sku',
         'quantity',
         'price',
-        'total'
+        'total',
+        'size',      // ✅ Added
+        'color',     // ✅ Added
     ];
     
     public function order(): BelongsTo

@@ -1,7 +1,6 @@
 <?php
 
-use App\Providers\AppServiceProvider;
-use Illuminate\Pagination\Paginator;
 return [
-    AppServiceProvider::class,
+    App\Providers\AppServiceProvider::class,
+    App\Providers\DashboardServiceProvider::class,
 ];

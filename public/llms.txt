@@ -1,0 +1,69 @@
+# ============================================================
+# LLMS.TXT - VELENZA (velenza.pk)
+# ============================================================
+# This file helps AI/LLM systems understand your website.
+# ============================================================
+
+# ============================================================
+# ABOUT VELENZA
+# ============================================================
+VELENZA is a luxury Pakistani fashion e-commerce brand offering premium clothing,
+embroidered suits, and contemporary fashion for men and women.
+
+# ============================================================
+# KEY RESOURCES
+# ============================================================
+- Homepage: https://velenza.pk
+- Products: https://velenza.pk/products
+- Categories: https://velenza.pk/category/{slug}
+- Product Detail: https://velenza.pk/product/{slug}
+
+# ============================================================
+# BUSINESS INFORMATION
+# ============================================================
+Brand: VELENZA
+Industry: Fashion Retail (E-commerce)
+Location: Pakistan
+Product Categories: Luxury, Embroidered, Lawn, New Arrivals, Sale
+
+# ============================================================
+# IMPORTANT PAGES
+# ============================================================
+- Homepage: https://velenza.pk
+- New Arrivals: https://velenza.pk/category/new-arrivals
+- Sale: https://velenza.pk/category/sale
+- Contact: https://velenza.pk/contact
+- About: https://velenza.pk/about
+- Privacy Policy: https://velenza.pk/privacy
+- Terms & Conditions: https://velenza.pk/terms
+
+# ============================================================
+# PRODUCT CATEGORIES
+# ============================================================
+1. Luxury - Premium fashion for sophisticated taste
+2. Embroidered - Traditional craftsmanship with modern designs
+3. Lawn - Comfortable summer wear
+4. New Arrivals - Latest collection
+5. Sale - Discounted items
+
+# ============================================================
+# SHIPPING & RETURNS
+# ============================================================
+- Free shipping on orders over $100
+- 14-day return policy
+- Standard delivery: 3-5 business days
+- Express shipping available
+
+# ============================================================
+# SOCIAL MEDIA
+# ============================================================
+- Instagram: https://www.instagram.com/velenza
+- Facebook: https://www.facebook.com/velenza
+- Pinterest: https://www.pinterest.com/velenza
+
+# ============================================================
+# CONTACT INFORMATION
+# ============================================================
+Email: support@velenza.pk
+Phone: +92-XXX-XXXXXXX
+Address: Lahore, Punjab, Pakistan

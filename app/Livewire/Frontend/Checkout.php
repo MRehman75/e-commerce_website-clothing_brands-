@@ -33,8 +33,8 @@ class Checkout extends Component
     {
         $this->cart = session()->get('cart', []);
 
-        if (auth()->check()) {
-            $user = auth()->user();
+        if (auth('customer')->check()) {
+            $user = auth('customer')->user();
             $this->customer_name  = $user->name;
             $this->customer_email = $user->email;
         }
@@ -172,7 +172,7 @@ $coupon = Coupon::where('code', strtoupper(trim($this->coupon_code)))
         // Order create karo
         $order = Order::create([
             'order_number'     => 'ORD-' . strtoupper(Str::random(8)),
-            'user_id'          => auth()->id(),
+            'user_id'          => auth('customer')->id(),
             'customer_name'    => $this->customer_name,
             'customer_email'   => $this->customer_email,
             'customer_phone'   => $this->customer_phone,
@@ -220,7 +220,7 @@ $customer->update(['last_order_at' => now()]);
         \App\Models\Transaction::create([
             'transaction_id' => 'TXN-' . strtoupper(Str::random(8)),
             'order_id'       => $order->id,
-            'user_id'        => auth()->id(),
+            'user_id'        => auth('customer')->id(),
             'amount'         => $this->total,
             'payment_method' => $this->payment_method,
             'status'         => $txnStatus,  // ✅ COD = completed

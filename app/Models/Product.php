@@ -45,8 +45,35 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
     public function orderItems(): \Illuminate\Database\Eloquent\Relations\HasMany
-{
-    return $this->hasMany(\App\Models\OrderItem::class);
-}
+    {
+        return $this->hasMany(\App\Models\OrderItem::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Carts::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // ✅ New Relationships for Sizes and Colors
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+
+    public function colors()
+    {
+        return $this->hasMany(ProductColor::class);
+    }
 }

@@ -72,4 +72,13 @@ class Order extends Model
     {
         return $this->total;
     }
+        public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+    public function statuses()
+   {
+    return $this->hasMany(OrderStatus::class);
+   }
 }

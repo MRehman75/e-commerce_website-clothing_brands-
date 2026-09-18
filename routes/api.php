@@ -22,6 +22,18 @@ use App\Http\Controllers\Api\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 
+use Illuminate\Http\Request;
+use App\Models\Carts;
+
+Route::get('/cart-count', function () {
+    if (auth()->check()) {
+        $count = Carts::where('user_id', auth()->id())->sum('quantity');
+    } else {
+        $count = collect(session('cart', []))->sum('quantity');
+    }
+    return response()->json(['count' => $count]);
+})->name('api.cart-count');
+
 // ─── Auth ────────────────────────────────────────────────────────────
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
@@ -139,4 +151,5 @@ Route::prefix('settings')->group(function () {
     Route::delete('footer/columns/{footerColumn}', [SettingController::class, 'destroyFooterColumn']);
     Route::post('footer/columns/{footerColumn}/links',         [SettingController::class, 'storeFooterLink']);
     Route::delete('footer/links/{footerLink}',                 [SettingController::class, 'destroyFooterLink']);
+    Route::get('settings/social-links', [SettingController::class, 'socialLinks']);
 });

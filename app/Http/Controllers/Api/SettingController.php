@@ -135,7 +135,7 @@ class SettingController extends Controller
         $request->validate([
             'label'          => 'required|string|max:100',
             'url'            => 'required|string|max:500',
-            'open_in_new_tab'=> 'boolean',
+            'open_in_new_tab' => 'boolean',
             'sort_order'     => 'nullable|integer|min:0',
             'is_active'      => 'boolean',
         ]);
@@ -152,5 +152,12 @@ class SettingController extends Controller
     {
         $footerLink->delete();
         return response()->json(['message' => 'Footer link delete ho gaya!']);
+    }
+
+    public function socialLinks()
+    {
+        return response()->json([
+            'data' => \App\Models\SocialLink::active()->get()
+        ]);
     }
 }
